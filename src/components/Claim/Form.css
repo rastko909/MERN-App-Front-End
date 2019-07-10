@@ -4,3 +4,12 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+.answer-container {
+  width: 800px;
+}
+
+.answer {
+  width: 100%;
+  margin-left: 0px !important;
+}
