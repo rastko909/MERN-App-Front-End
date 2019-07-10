@@ -9,7 +9,7 @@ class Routes extends React.Component {
     return (
 
       <Switch>
-        <Route path="/claims/new" component={Form} />
+        <Route path="/claim/new" component={Form} />
 
         {/* <Route path="/" render={() => {
           return <Home podcasts={podcasts} deletePodcast={deletePodcast} />
