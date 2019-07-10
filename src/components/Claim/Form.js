@@ -17,7 +17,7 @@ class Form extends React.Component {
   }
 
   sendAnswers = async () => {
-    const response = await axios.post(process.env.REACT_APP_API_URL, this.state);
+    const response = await axios.post(process.env.REACT_APP_API_URL + "/api/claim/new", this.state);
     console.log(response.data);
   }
 
