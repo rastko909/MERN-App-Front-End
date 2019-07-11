@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       {/* <div className="logo">Testing Logo Font (Open Sans)</div> */}
-
       {/* <Navigation  /> */}
       <div className="container">
         <div className="container-inner">

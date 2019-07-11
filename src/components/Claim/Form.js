@@ -9,7 +9,7 @@ class Form extends React.Component {
   state = {
     pagination: {
       page: {
-        currentPage: 0, 
+        currentPage: 0,
         maxPage: 10
       },
     },
@@ -21,12 +21,7 @@ class Form extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state)
     this.sendAnswers()
-  }
-
-  handleChecked = (event) => {
-    console.log(this.state.newClaim.categories)
   }
 
   sendAnswers = async () => {
@@ -35,18 +30,13 @@ class Form extends React.Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.type)
-    // console.log(event.target.id)
-
     if (event.target.type === "checkbox") {
       let newState = this.state;
-
       if (newState.newClaim.categories[event.target.id]) {
         newState.newClaim.categories[event.target.id] = event.target.checked
       } else {
         newState.newClaim.categories[event.target.id] = !newState.newClaim.categories[event.target.id]
       }
-
       this.setState(newState);
     } else {
       let newState = this.state;
@@ -55,17 +45,13 @@ class Form extends React.Component {
     }
   }
 
-  componentDidUpdate = () => {
-    console.log(this.state)
-  }
-
   render = () => {
     return (
       <>
         <FormGroup className="form-container">
           <div className="category-container">
             <div className="claim-heading">Categories</div>
-            <p className="category-text">Please select any of the following cateogires that apply to your claim.</p>
+            <p className="category-text">Please select any of the following cateogires that apply to your claim: </p>
             <div className="categories">
               <div className="category-column">
                 <FormControlLabel
@@ -272,9 +258,16 @@ class Form extends React.Component {
                 labelPlacement='top'
               />
             </div>
-            <Button className="submit-btn" variant="contained" onClick={this.handleSubmit} color="primary">
-              Submit
-          </Button>
+            
+            <div className="button-row">
+              <Button className="submit-btn" variant="contained" onClick={this.handleSubmit} color="primary">
+                Submit
+              </Button>
+              <Button className="cancel-btn" variant="contained" onClick={this.handleSubmit} color="secondary">
+                Cancel
+              </Button>
+            </div>
+
           </div>
 
         </FormGroup>

@@ -56,11 +56,24 @@
   font-weight: bold;
 }
 
+.button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 80%;
+  padding: 1rem;
+  /* border: 1px solid black; */
+}
+
 .category-text {
   /* font-style: italic; */
   width: 80%;
 }
 
 .submit-btn {
-  width: 80%;
+  width: 40%;
+}
+
+.cancel-btn {
+  width: 40%;
 }

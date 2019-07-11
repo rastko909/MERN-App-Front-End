@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Form from './components/Claim/Form';
+// import AdminLogin from './components/Admin/Login';
 
 class Routes extends React.Component {
   render() {
@@ -9,7 +10,11 @@ class Routes extends React.Component {
     return (
 
       <Switch>
+
+        {/* <Route path="/admin/login" component={AdminLogin} />  */}
         <Route path="/claim/new" component={Form} />
+
+
 
         {/* <Route path="/" render={() => {
           return <Home podcasts={podcasts} deletePodcast={deletePodcast} />
