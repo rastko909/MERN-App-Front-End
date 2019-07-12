@@ -30,6 +30,12 @@ class Form extends React.Component {
     console.log(response.data);
   }
 
+  handleBusinessID = (event) => {
+    let newState = this.state;
+    newState.newClaim[event.target.id] = event.target.value
+    this.setState(newState)
+  }
+
   handleChange = (event) => {
     if (event.target.type === "checkbox") {
       let newState = this.state;
@@ -57,7 +63,7 @@ class Form extends React.Component {
           <div className="business-id-container">
             <FormControl className="">
               <InputLabel htmlFor="component-simple">Business ID</InputLabel>
-              <Input id="business_id" onChange={this.handleChange} />
+              <Input id="business_id" onChange={this.handleBusinessID} />
             </FormControl>
           </div>
           <div className="category-container">
