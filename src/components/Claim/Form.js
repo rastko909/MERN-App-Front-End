@@ -15,6 +15,7 @@ class Form extends React.Component {
       },
     },
     newClaim: {
+      business_id: "",
       answers: {},
       categories: {}
     }
@@ -39,6 +40,7 @@ class Form extends React.Component {
   handleChange = (event) => {
     if (event.target.type === "checkbox") {
       let newState = this.state;
+
       if (newState.newClaim.categories[event.target.id]) {
         newState.newClaim.categories[event.target.id] = event.target.checked
       } else {
