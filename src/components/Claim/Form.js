@@ -1,8 +1,9 @@
 import React from 'react';
 import './Form.css';
-import { Button, Checkbox, FormControlLabel, FormGroup } from '@material-ui/core/';
+import { Button, Checkbox, FormControlLabel, FormGroup, FormControl, InputLabel, Input } from '@material-ui/core/';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from 'axios';
+import { DropzoneArea } from 'material-ui-dropzone'
 
 class Form extends React.Component {
 
@@ -53,6 +54,12 @@ class Form extends React.Component {
     return (
       <>
         <FormGroup className="form-container">
+          <div className="business-id-container">
+            <FormControl className="">
+              <InputLabel htmlFor="component-simple">Business ID</InputLabel>
+              <Input id="business_id" onChange={this.handleChange} />
+            </FormControl>
+          </div>
           <div className="category-container">
             <div className="claim-heading">Categories</div>
             <p className="category-text">Please select any of the following cateogires that apply to your claim: </p>
@@ -262,7 +269,18 @@ class Form extends React.Component {
                 labelPlacement='top'
               />
             </div>
-            
+            <div className="dropzone-container">
+            <p id="dropzone-description" className='question'>
+                Please attach any relevant documents below:</p>
+            <DropzoneArea 
+                showPreviews={true}
+                showPreviewsInDropzone={false}
+                acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+                dropzoneText={''}
+                dropzoneClass={'dropzone-custom'}
+                maxFileSize={25000000}
+              />
+            </div>
             <div className="button-row">
               <Button className="submit-btn" variant="contained" onClick={this.handleSubmit} color="primary">
                 Submit
