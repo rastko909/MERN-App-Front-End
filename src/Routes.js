@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
+import Home from './components/Home';
 import Form from './components/Claim/Form';
 import AdminLogin from './components/Admin/Login';
 import ClaimLogin from './components/Claim/Login';
@@ -12,6 +13,7 @@ class Routes extends React.Component {
 
       <Switch>
 
+        <Route exact path="/" component={Home} /> 
         <Route path="/admin/login" component={AdminLogin} /> 
         <Route path="/claim/login" component={ClaimLogin} /> 
         <Route path="/claim/new" component={Form} />

@@ -45,6 +45,10 @@ class Form extends React.Component {
     }
   }
 
+  handleCancel = () => {
+    window.location.pathname = '/';
+  }
+
   render = () => {
     return (
       <>
@@ -263,7 +267,7 @@ class Form extends React.Component {
               <Button className="submit-btn" variant="contained" onClick={this.handleSubmit} color="primary">
                 Submit
               </Button>
-              <Button className="cancel-btn" variant="contained" onClick={this.handleSubmit} color="secondary">
+              <Button className="cancel-btn" variant="contained" onClick={this.handleCancel} color="secondary">
                 Cancel
               </Button>
             </div>
