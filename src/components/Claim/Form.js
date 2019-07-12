@@ -25,7 +25,7 @@ class Form extends React.Component {
   }
 
   sendAnswers = async () => {
-    const response = await axios.post(process.env.REACT_APP_API_URL + "/api/claim/new", this.state.newClaim);
+    const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim);
     console.log(response.data);
   }
 
@@ -43,6 +43,10 @@ class Form extends React.Component {
       newState.newClaim.answers[event.target.id] = event.target.value
       this.setState(newState)
     }
+  }
+
+  handleCancel = () => {
+    window.location.pathname = '/';
   }
 
   render = () => {
@@ -263,7 +267,7 @@ class Form extends React.Component {
               <Button className="submit-btn" variant="contained" onClick={this.handleSubmit} color="primary">
                 Submit
               </Button>
-              <Button className="cancel-btn" variant="contained" onClick={this.handleSubmit} color="secondary">
+              <Button className="cancel-btn" variant="contained" onClick={this.handleCancel} color="secondary">
                 Cancel
               </Button>
             </div>
