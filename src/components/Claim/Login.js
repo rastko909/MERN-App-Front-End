@@ -7,6 +7,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 
 
@@ -36,9 +37,31 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignIn() {
-  const [businessId, setBusinessId] = useState();
-  const [secretKey, setSecretKey] = useState();
+  const [businessId, setBusinessId] = useState('');
+  const [secretKey, setSecretKey] = useState('');
   const classes = useStyles();
+
+  const handleSubmit = (e) => {
+    console.log(businessId);
+    console.log(secretKey);
+    e.preventDefault();
+    claimLogin(businessId, secretKey);
+  }
+
+  const claimLogin = async (businessId, secretKey) => {
+    const data = { businessId, secretKey }
+    let response;
+    try {
+      response= await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+    finally {
+      console.log(response);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -60,6 +83,7 @@ export default function SignIn() {
             name="bus_id"
             autoComplete="bus_id"
             autoFocus
+            onChange={e => setBusinessId(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -71,6 +95,7 @@ export default function SignIn() {
             type="password"
             id="secret_key"
             autoComplete="current-password"
+            onChange={e => setSecretKey(e.target.value)}
           />
           <Button
             type="submit"
@@ -78,7 +103,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onCick={handleSubmit()}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
