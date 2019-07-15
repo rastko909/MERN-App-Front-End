@@ -24,7 +24,6 @@ class Routes extends React.Component {
         <Route path="/admin/dashboard/business/new" component={NewBusiness} />
         <Route path="/admin/dashboard" component={Dashboard} />
 
-
         
         {/* <Route path="/" render={() => {
           return <Home podcasts={podcasts} deletePodcast={deletePodcast} />
