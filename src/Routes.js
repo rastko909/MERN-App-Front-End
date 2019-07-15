@@ -6,6 +6,8 @@ import Form from './components/Claim/Form';
 import AdminLogin from './components/Admin/Login';
 import ClaimLogin from './components/Claim/Login';
 import Dashboard from './components/Admin/Dashboard';
+import NewBusiness from './components/Admin/NewBusiness';
+
 
 
 class Routes extends React.Component {
