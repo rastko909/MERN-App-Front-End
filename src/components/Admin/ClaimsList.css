@@ -1,0 +1,32 @@
+.status { 
+  text-transform: capitalize;
+  border-radius: 0.25rem;
+}
+
+.priority {
+  text-transform: capitalize;
+}
+
+.new {
+  background: #f44336;
+  padding: 0.25rem;
+  color: white;
+}
+
+.open {
+  background: #03a9f4;
+  padding: 0.25rem;
+  color: white;
+}
+
+.pending {
+  background: #4caf50;
+  padding: 0.25rem;
+  color: white;
+}
+
+.closed {
+  background: #212121;
+  padding: 0.25rem;
+  color: white;
+}
