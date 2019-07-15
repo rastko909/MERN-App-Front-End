@@ -47,7 +47,7 @@ export default function NewBusiness() {
     const data = { businessID, businessName, abn }
     let response;
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/business/new', data);
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/business/new', data, { withCredentials: true });
     }
     catch (error) {
       console.log(error);

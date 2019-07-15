@@ -52,7 +52,7 @@ export default function SignIn() {
     const data = { businessId, secretKey }
     let response;
     try {
-      response= await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+      response= await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data, { withCredentials: true });
     }
     catch (error) {
       console.log(error);
