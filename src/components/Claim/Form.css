@@ -24,14 +24,19 @@
 .business-id-container {
   width: 80%;
   padding: 1rem;
+  /* border: 1px solid red; */
 }
 
 .claim-heading {
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: bolder;
   /* padding: 0.5rem; */
   margin: 0;
   width: 80%;
+  background: #135E89;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
 }
 
 .categories {
