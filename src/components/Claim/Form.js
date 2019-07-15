@@ -5,6 +5,8 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone'
 
+axios.defaults.withCredentials = true;
+
 const questions = [
   'Are you or anyone else in physical danger? If so, please call 000 immediately',
   'What is the concern/incident that you wish to disclose? Please provide a full description of your concerns/incident and why you identify them as the type of disclosure that you have, above?',
@@ -48,7 +50,7 @@ class Form extends React.Component {
   }
 
   sendAnswers = async () => {
-    const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim, { withCredentials: true });
+    const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim);
     console.log(response.data);
   }
 

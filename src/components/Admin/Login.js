@@ -3,6 +3,8 @@ import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Lin
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -47,7 +49,7 @@ export default function SignIn() {
     let response;
     
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, { withCredentials: true });
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data);
     }
     catch (error) {
       console.log(error);

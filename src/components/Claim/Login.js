@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 
-
+axios.defaults.withCredentials = true;
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -52,7 +52,7 @@ export default function SignIn() {
     const data = { businessId, secretKey }
     let response;
     try {
-      response= await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data, { withCredentials: true });
+      response= await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
     }
     catch (error) {
       console.log(error);
