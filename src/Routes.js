@@ -5,6 +5,8 @@ import Home from './components/Home';
 import Form from './components/Claim/Form';
 import AdminLogin from './components/Admin/Login';
 import ClaimLogin from './components/Claim/Login';
+import Dashboard from './components/Admin/Dashboard';
+
 
 class Routes extends React.Component {
   render() {
@@ -17,6 +19,9 @@ class Routes extends React.Component {
         <Route path="/admin/login" component={AdminLogin} /> 
         <Route path="/claim/login" component={ClaimLogin} /> 
         <Route path="/claim/new" component={Form} />
+        <Route path="/admin/dashboard" component={Dashboard} />
+        <Route path="/admin/newBusiness" component={NewBusiness} />
+
         
         {/* <Route path="/" render={() => {
           return <Home podcasts={podcasts} deletePodcast={deletePodcast} />
