@@ -21,8 +21,9 @@ class Routes extends React.Component {
         <Route path="/admin/login" component={AdminLogin} /> 
         <Route path="/claim/login" component={ClaimLogin} /> 
         <Route path="/claim/new" component={Form} />
+        <Route path="/admin/dashboard/business/new" component={NewBusiness} />
         <Route path="/admin/dashboard" component={Dashboard} />
-        <Route path="/admin/newBusiness" component={NewBusiness} />
+
 
         
         {/* <Route path="/" render={() => {
