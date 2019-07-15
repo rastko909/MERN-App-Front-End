@@ -89,7 +89,7 @@ class Form extends React.Component {
                 control={<OutlinedInput id="business_id" 
                 autoFocus={true} 
                 fullWidth={true}
-                onChange={this.handleChange}
+                onChange={this.handleBusinessID}
                 placeholder='Please use the Business ID supplied by your company, or call our hotline for help.' />}
                 labelPlacement='top'
                 required={true}
