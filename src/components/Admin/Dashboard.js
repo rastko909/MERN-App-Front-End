@@ -41,6 +41,25 @@ const useStyles = makeStyles(theme => ({
 
 export default function ClippedDrawer() {
   const classes = useStyles();
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function Dashboard() {
+
+
+  
+  const getClaims = async () => {
+    try {
+      const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard')
+      return claims
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getClaims()
+  }, []) 
 
   return (
     <div className={classes.root}>
