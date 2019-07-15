@@ -46,7 +46,7 @@ export default function SignIn() {
     const data = { email, password }
     let response;
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data);
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, { withCredentials: true });
     }
     catch (error) {
       console.log(error);
