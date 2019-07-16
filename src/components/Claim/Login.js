@@ -39,31 +39,36 @@ const useStyles = makeStyles(theme => ({
 export default function SignIn() {
   const [businessId, setBusinessId] = useState('');
   const [secretKey, setSecretKey] = useState('');
+  const [claimData, setClaimData] = useState(null);
+
   const classes = useStyles();
 
   const handleSubmit = (e) => {
-    console.log(businessId);
-    console.log(secretKey);
     e.preventDefault();
     claimLogin(businessId, secretKey);
   }
 
   const claimLogin = async (businessId, secretKey) => {
     const data = { businessId, secretKey }
-    let response;
+
     try {
-      response= await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+
+      if (response.status !== 200)
+        console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
+      else {
+        console.log("Authenticated, here's your data: ", response.data);
+        setClaimData(response.data)
+      }
     }
     catch (error) {
-      console.log(error);
-    }
-    finally {
-      console.log(response);
+      console.log(`{ RENDER VIEW FOR ERROR: ${error.message} }`);
     }
   }
 
-  return (
-    <Container component="main" maxWidth="xs">
+  const renderLogin = () => {
+    return (
+      <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -110,5 +115,35 @@ export default function SignIn() {
         </form>
       </div>
     </Container>
+    );
+  }
+
+  const renderClaimData = () => {
+
+    const { claimBusId, categories, details } = claimData;
+
+    return (
+      <div className="simple-container">
+        <h1>Claim for {claimBusId}</h1>
+
+        <h3>Categories:</h3>
+        {Object.keys(categories).forEach((category, index) => {
+          console.log("Category:", category);
+          return <p key={index}>{category}</p>  
+        })}
+
+        <h3>Answers:</h3>
+        {Object.values(details).forEach((answer, index) => {
+          console.log("Answer:", answer);
+          return (<p key={index}>{answer}</p>);
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {claimData === null ? renderLogin() : renderClaimData()}
+    </>
   );
 }
