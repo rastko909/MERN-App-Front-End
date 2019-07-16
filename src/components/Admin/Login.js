@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Container, Typography, makeStyles } from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
+// import AlertDialog from '../Shared/Alert';
 
 axios.defaults.withCredentials = true;
 
@@ -30,38 +31,54 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setValues] = useState({
+    email: '',
+    password: '',
+    valid: true
+  })
+
+  // const [flag, setFlag] = useState(true);
 
   const classes = useStyles();
 
   const handleSubmit = (e) => {
-    console.log(email);
-    console.log(password);
     e.preventDefault();
-    adminLogin(email, password);
+    adminLogin(form.email, form.password);
   }
+
+  const updateField = (e) => {
+    setValues({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const adminLogin = async (email, password) => {
     const data = { email, password }
     let response;
-    
     try {
       response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data);
     }
     catch (error) {
-      console.log(error);
+      console.log('Error in catch: ', error);
     }
-    finally {
-      console.log(response);
+
+    if (!response || response.status !== 200) {
+      alert('Unauthorized.')
+    } else if (response.status === 200) {
+      props.history.push('/admin/dashboard');
     }
   }
+
+  // review when i understand hookds better 
+  // useEffect(() => { console.log('use effect') }, [flag])
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      {/* {form.valid ? null : <AlertDialog message={'Invalid credentials.'} />}  */}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -80,7 +97,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={updateField}
           />
           <TextField
             variant="outlined"
@@ -92,7 +109,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={updateField}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

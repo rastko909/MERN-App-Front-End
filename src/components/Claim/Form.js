@@ -76,7 +76,7 @@ class Form extends React.Component {
       this.setState(newState);
     }
   }
-
+  
   handleCancel = () => {
     window.location.pathname = '/';
   }
