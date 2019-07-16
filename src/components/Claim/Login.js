@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+// import AlertDialog from '../Shared/Alert';
 
 axios.defaults.withCredentials = true;
 
@@ -36,14 +37,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
+
   const [businessId, setBusinessId] = useState('');
   const [secretKey, setSecretKey] = useState('');
+
   const classes = useStyles();
 
   const handleSubmit = (e) => {
-    console.log(businessId);
-    console.log(secretKey);
     e.preventDefault();
     claimLogin(businessId, secretKey);
   }
@@ -52,14 +53,18 @@ export default function SignIn() {
     const data = { businessId, secretKey }
     let response;
     try {
-      response= await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+      response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
     }
     catch (error) {
-      console.log(error);
+      console.log('Error in catch: ', error);
     }
-    finally {
-      console.log(response);
+
+    if (!response || response.status !== 200) {
+      alert('Unauthorized.')
+    } else if (response === 200) {
+      props.history.push('/claim/view');
     }
+
   }
 
   return (

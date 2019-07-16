@@ -57,7 +57,7 @@ export default function SimpleTable() {
               <TableCell align="right">{row.claimId}</TableCell>
               <TableCell align="right"><span className={'status ' + row.status}>{row.status}</span></TableCell>
               <TableCell align="right">{row.date}</TableCell>
-              <TableCell align="right"><spam className={'priority'}>{row.priority}</spam></TableCell>
+              <TableCell align="right"><span className={'priority'}>{row.priority}</span></TableCell>
             </TableRow>
           ))}
         </TableBody>
