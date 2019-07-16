@@ -41,6 +41,7 @@ export default function SignIn(props) {
 
   const [businessId, setBusinessId] = useState('');
   const [secretKey, setSecretKey] = useState('');
+  const [claimData, setClaimData] = useState(null);
 
   const classes = useStyles();
 
@@ -51,24 +52,36 @@ export default function SignIn(props) {
 
   const claimLogin = async (businessId, secretKey) => {
     const data = { businessId, secretKey }
-    let response;
+
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+
+      if (response.status !== 200)
+        console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
+      else {
+        console.log("Authenticated, here's your data: ", response.data);
+        setClaimData(response.data)
+      }
     }
     catch (error) {
-      console.log('Error in catch: ', error);
-    }
+      console.log(`{ RENDER VIEW FOR ERROR: ${error.message} }`);
+//       response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+//     }
+//     catch (error) {
+//       console.log('Error in catch: ', error);
+//     }
 
-    if (!response || response.status !== 200) {
-      alert('Unauthorized.')
-    } else if (response === 200) {
-      props.history.push('/claim/view');
+//     if (!response || response.status !== 200) {
+//       alert('Unauthorized.')
+//     } else if (response === 200) {
+//       props.history.push('/claim/view');
     }
 
   }
 
-  return (
-    <Container component="main" maxWidth="xs">
+  const renderLogin = () => {
+    return (
+      <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -115,5 +128,35 @@ export default function SignIn(props) {
         </form>
       </div>
     </Container>
+    );
+  }
+
+  const renderClaimData = () => {
+
+    const { claimBusId, categories, details } = claimData;
+
+    return (
+      <div className="simple-container">
+        <h1>Claim for {claimBusId}</h1>
+
+        <h3>Categories:</h3>
+        {Object.keys(categories).forEach((category, index) => {
+          console.log("Category:", category);
+          return <p key={index}>{category}</p>  
+        })}
+
+        <h3>Answers:</h3>
+        {Object.values(details).forEach((answer, index) => {
+          console.log("Answer:", answer);
+          return (<p key={index}>{answer}</p>);
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {claimData === null ? renderLogin() : renderClaimData()}
+    </>
   );
 }

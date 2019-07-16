@@ -47,15 +47,13 @@ export default function NewBusiness() {
 
   const createBusiness = async (businessID, businessName, abn) => {
     const data = { businessID, businessName, abn }
-    let response;
+
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/business/new', data);
+      let response = await axios.post(process.env.REACT_APP_API_URL + '/business/new', data);
+      console.log(response);
     }
     catch (error) {
       console.log(error);
-    }
-    finally {
-      console.log(response);
     }
   }
 
