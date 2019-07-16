@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -41,6 +42,20 @@ const useStyles = makeStyles(theme => ({
 
 export default function ClippedDrawer() {
   const classes = useStyles();
+
+  
+  const getClaims = async () => {
+    try {
+      const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard')
+      return claims
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getClaims()
+  }, []) 
 
   return (
     <div className={classes.root}>
