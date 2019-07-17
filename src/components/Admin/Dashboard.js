@@ -40,9 +40,8 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-export default function ClippedDrawer(props) {
+export default function Dashboard(props) {
   const classes = useStyles();
-
   
   const getClaims = async () => {
     try {
