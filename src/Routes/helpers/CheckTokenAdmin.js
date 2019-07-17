@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 const checkToken = async () => {
   try {
     let response = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard')
