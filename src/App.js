@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from './Routes';
+import Routes from './Routes/Routes';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './App.css';
 

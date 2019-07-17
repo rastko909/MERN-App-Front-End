@@ -1,13 +1,12 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import checkToken from './helpers/CheckToken'
+import checkToken from '../helpers/CheckTokenAdmin'
 
 export const AdminPrivate = ({ component: Component, ...rest }) => {
   return (
     <Route {...rest}
       render= {props => {
         const path = props.location.pathname
-
         checkToken(path).then((result) => {
           if (result === true) { 
             console.log("checkToken === true");
