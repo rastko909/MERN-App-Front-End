@@ -11,8 +11,6 @@ import Claim from './components/Claim/Claim'
 import AdminPrivate from './AdminPrivate';
 import { ClaimPrivate } from './ClaimPrivate';
 
-import TestComp from './components/TestComp';
-
 export default class Routes extends React.Component {
   render() {
     return (
