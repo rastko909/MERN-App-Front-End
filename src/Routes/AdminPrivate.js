@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import checkToken from './helpers/CheckToken'
+import { Redirect } from 'react-router-dom';
+import checkToken from '../helpers/CheckTokenAdmin'
 
 
 export default class AdminPrivate extends React.Component {
