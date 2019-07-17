@@ -12,7 +12,6 @@ const checkToken = async () => {
       return false
     }
   } catch (error) { 
-    console.log('Auth Failed. Error:', error.message)
     return false
   }
 }
