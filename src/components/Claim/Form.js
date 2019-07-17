@@ -43,15 +43,34 @@ class Form extends React.Component {
     }
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     console.log(this.state);
-    this.sendAnswers();
+
+    const exists = await this.checkId();
+
+    if (exists)
+      this.sendAnswers();
+    else {
+      console.log(`{ RENDER ID NOT FOUND NOTIFICATION FOR ID: ${this.state.newClaim.business_id} }`);
+    }
+  }
+
+  checkId = async() => {
+    const { business_id } = this.state.newClaim;
+    const response = await axios.get(process.env.REACT_APP_API_URL + "/business/check", { headers: { business_id } })
+
+
+    return response.data.exists;
   }
 
   sendAnswers = async () => {
     const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim);
-    console.log(response.data);
+  
+    if (response.status !== 200)
+      console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
+    else
+      console.log(`{ RENDER 'Secret key with disclaimer': ${response.data.secretKey}`);
   }
 
   handleBusinessID = (event) => {
@@ -76,7 +95,7 @@ class Form extends React.Component {
       this.setState(newState);
     }
   }
-
+  
   handleCancel = () => {
     window.location.pathname = '/';
   }
@@ -99,7 +118,7 @@ class Form extends React.Component {
           </div>
           <div className="category-container">
             <div className="claim-heading">Categories</div>
-            <p className="category-text">Please select any of the following cateogires that apply to your claim: </p>
+            <p className="category-text">Please select any of the following categories that apply to your claim: </p>
             <div className="categories">
               <div className="category-column">
                 <FormControlLabel
