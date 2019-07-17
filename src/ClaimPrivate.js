@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import checkToken from './helpers/CheckTocken'
+import checkToken from './helpers/CheckToken'
 
 export const ClaimPrivate = ({ component: Component, ...rest }) => {
   return (

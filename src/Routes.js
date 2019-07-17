@@ -16,7 +16,6 @@ import { ClaimPrivate } from './ClaimPrivate';
 
 class Routes extends React.Component {
   render() {
-    // const { podcasts, deletePodcast } = this.props
     return (
 
       <Switch>
@@ -27,20 +26,6 @@ class Routes extends React.Component {
         <ClaimPrivate exact path="/claim" component={Claim} />
         <AdminPrivate exact path="/admin/dashboard/business/new" component={NewBusiness} />
         <AdminPrivate exact path="/admin/dashboard" component={Dashboard} />
-
-        
-        {/* <Route path="/" render={() => {
-          return <Home podcasts={podcasts} deletePodcast={deletePodcast} />
-        }} /> */}
-
-        {/* <Route path="/register" render={() => {
-          return <Register register={this.props.register} authentication={authentication} />
-        }} /> */}
-
-        {/* <Route path="/login" render={() => {
-          return <Login login={this.props.login} authentication={authentication} />
-        }} /> */}
-
       </Switch>
     )
   }
