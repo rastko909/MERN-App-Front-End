@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import BallotIcon from '@material-ui/icons/Ballot';
 
-import ClaimsList from './ClaimsList';
+import ClaimsList from './components/ClaimsList';
 
 const drawerWidth = 240;
 

@@ -62,7 +62,7 @@ export default function SignIn(props) {
       response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data);
     }
     catch (error) {
-      console.log('Error in catch: ', error);
+      console.log('Error in catch: ', error.message);
     }
 
     if (!response || response.status !== 200) {
