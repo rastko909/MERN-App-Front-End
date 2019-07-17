@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn(props) {
+export default function ClaimLogin(props) {
 
   const [businessId, setBusinessId] = useState('');
   const [secretKey, setSecretKey] = useState('');
@@ -47,12 +47,11 @@ export default function SignIn(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    claimLogin(businessId, secretKey);
+    login(businessId, secretKey);
   }
 
-  const claimLogin = async (businessId, secretKey) => {
+  const login = async (businessId, secretKey) => {
     const data = { businessId, secretKey }
-
     try {
       const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
 
@@ -65,16 +64,6 @@ export default function SignIn(props) {
     }
     catch (error) {
       console.log(`{ RENDER VIEW FOR ERROR: ${error.message} }`);
-//       response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
-//     }
-//     catch (error) {
-//       console.log('Error in catch: ', error);
-//     }
-
-//     if (!response || response.status !== 200) {
-//       alert('Unauthorized.')
-//     } else if (response === 200) {
-//       props.history.push('/claim/view');
     }
 
   }
