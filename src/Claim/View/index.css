@@ -1,0 +1,50 @@
+.view-claim-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.view-claim-paper {
+  width: 80%;
+}
+
+.table { 
+  padding: 0.5rem;
+}
+
+.category { 
+  text-transform: capitalize;
+  margin-right: 0.5rem;
+}
+
+.claim-heading-container {
+  padding: 0.5rem 1rem;
+  background: #F9DE48;
+  border-radius: 0.25rem;
+}
+
+.status {
+  text-transform: capitalize;
+}
+
+.claim-information {
+  padding: 0.5rem 1rem;
+}
+
+.question-answer-container > * {
+  margin: 0.5rem !important;
+}
+
+.question {
+  background: #08233A;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.answer {
+  padding: 0.5rem;
+}
