@@ -40,9 +40,8 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-export default function DashboardHome(props) {
-  console.log("DASHBOARDHOME:", props);
-  const setView = props.setView;
+export default function DashboardHome({functions}) {
+  console.log("DASHBOARDHOME:", functions);
   const classes = useStyles();
 
   return (
@@ -74,7 +73,7 @@ export default function DashboardHome(props) {
       
       <main className={classes.content}>
         <div className={classes.toolbar} />
-          <ClaimsList setView={setView} />
+          <ClaimsList functions={functions}/>
       </main>
     </div>
   );
