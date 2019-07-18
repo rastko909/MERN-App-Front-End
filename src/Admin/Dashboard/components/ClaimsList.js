@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import axios from 'axios';
 
 import './ClaimsList.css';
 
@@ -20,19 +21,43 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function createData(businessId, name, claimId, status, date, priority) {
+const createData = (businessId, name, claimId, status, date, priority) => {
   return { businessId, name, claimId, status, date, priority };
 }
 
-const rows = [
-  createData('COA123', 'Coder Academy', '009120', 'new', '27/08/2019', 'urgent'),
-  createData('COA123', 'Coder Academy', '009120', 'open', '27/08/2019', 'high'),
-  createData('COA123', 'Coder Academy', '009120', 'pending', '27/08/2019', 'medium'),
-  createData('COA123', 'Coder Academy', '009120', 'pending', '27/08/2019', 'low'),
-];
+const rows = [];
+  
+const getClaims = async (props) => {
+  try {
+    const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard')
+    console.log("Here's the claims!", claims.data);
+    // createData
+    for(let claim of claims.data) {
+      rows.push(createData(claim.businessId, '{getBusinessName}', claim.claimId, claim.status, claim.timestamps.createdAt, '{PRIORITY}'));
+    }
 
-export default function SimpleTable() {
+    // return claims
+  } catch (error) {
+    console.log(error)
+  } finally {
+    props.setView("test")
+  }
+}
+
+
+export default function ClaimsList(props) {
   const classes = useStyles();
+  // const [, updateState] = React.useState();
+
+  console.log("REST:", props);
+
+  useEffect(() => {
+    if (rows.length < 1)
+      getClaims(props);
+  }, [props]) 
+
+  // if (rows.length < 1)
+  //   return null;
 
   return (
     <Paper className={classes.root}>
