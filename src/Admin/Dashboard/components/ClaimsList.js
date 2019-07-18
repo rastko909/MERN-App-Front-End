@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const handleClick = (id) => {
+const handleClick = (e, id) => {
+  e.stopPropagation();
   alert("Hey, you just clicked " + id);
 }
 
@@ -83,11 +84,11 @@ export default function ClaimsList({ functions }) {
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
-            <TableRow key={index} className="table-row">
-              <TableCell><span onClick={() => handleClick(row.id)} className={'monospaced'}>{row.id}</span></TableCell>
-              <TableCell onClick={() => handleClick(row.businessId)} align="left">{row.name}</TableCell>
+            <TableRow key={index} onClick={(e) => handleClick(e, row.id)} className="table-row" >
+              <TableCell><span onClick={(e) => handleClick(e, row.id)} className={'monospaced link-hover'}>{row.id}</span></TableCell>
+              <TableCell align="left"><span onClick={(e) => handleClick(e, row.businessId)} className={'link-hover'}>{row.name}</span></TableCell>
               <TableCell align="center">
-                <span onClick={() => handleClick(row.businessId)} className={'monospaced'}>{row.businessId}</span>
+                <span onClick={(e) => handleClick(e, row.businessId)} className={'monospaced link-hover'}>{row.businessId}</span>
               </TableCell>
               <TableCell align="center"><span className={'status ' + row.status}>{row.status}</span></TableCell>
               <TableCell>{row.date}</TableCell>
