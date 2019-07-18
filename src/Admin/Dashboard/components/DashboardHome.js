@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function DashboardHome({functions}) {
-  console.log("DASHBOARDHOME:", functions);
   const classes = useStyles();
 
   return (

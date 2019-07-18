@@ -8,7 +8,6 @@ export default class Dashboard extends React.Component {
   };
 
   setView = (view) => {
-    console.log("If I see this I went deep!");
     this.setState({ view: view })
   }
 
