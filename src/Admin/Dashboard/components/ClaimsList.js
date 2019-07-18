@@ -21,43 +21,34 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const createData = (businessId, name, claimId, status, date, priority) => {
-  return { businessId, name, claimId, status, date, priority };
+const createData = (businessId, name, id, status, date, priority) => {
+  return { businessId, name, id, status, date, priority };
 }
 
 const rows = [];
   
 const getClaims = async (props) => {
   try {
-    const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard')
-    console.log("Here's the claims!", claims.data);
-    // createData
-    for(let claim of claims.data) {
-      rows.push(createData(claim.businessId, '{getBusinessName}', claim.claimId, claim.status, claim.timestamps.createdAt, '{PRIORITY}'));
-    }
+    const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard');
+    
+    for(let claim of claims.data)
+      rows.push(createData(claim.businessId, '{getBusinessName}', claim.id, claim.status, claim.timestamps.createdAt, '{PRIORITY}'));
 
-    // return claims
   } catch (error) {
-    console.log(error)
+    console.log("An exception was caught:", error);
   } finally {
-    props.setView("test")
+    props.setView("test");
   }
 }
 
 
 export default function ClaimsList(props) {
   const classes = useStyles();
-  // const [, updateState] = React.useState();
-
-  console.log("REST:", props);
-
+  
   useEffect(() => {
     if (rows.length < 1)
       getClaims(props);
   }, [props]) 
-
-  // if (rows.length < 1)
-  //   return null;
 
   return (
     <Paper className={classes.root}>
@@ -79,7 +70,7 @@ export default function ClaimsList(props) {
                 {row.businessId}
               </TableCell>
               <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.claimId}</TableCell>
+              <TableCell align="right">{row.id}</TableCell>
               <TableCell align="right"><span className={'status ' + row.status}>{row.status}</span></TableCell>
               <TableCell align="right">{row.date}</TableCell>
               <TableCell align="right"><span className={'priority'}>{row.priority}</span></TableCell>
