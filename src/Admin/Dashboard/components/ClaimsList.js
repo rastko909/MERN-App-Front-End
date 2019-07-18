@@ -55,14 +55,12 @@ const getClaims = async (functions) => {
   } catch (error) {
     console.log("An exception was caught:", error);
   } finally {
-    console.log("HERE ARE THE FUNCTIONS:", functions);
     functions.setView("home");
   }
 }
 
 
 export default function ClaimsList({ functions }) {
-  console.log("ClaimsList:", functions);
   const classes = useStyles();
   
   useEffect(() => {
