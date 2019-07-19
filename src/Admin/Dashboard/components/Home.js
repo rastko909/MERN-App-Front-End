@@ -77,7 +77,7 @@ export default function Home({view, functions}) {
 
        <main className={classes.content}>
         <div className={classes.toolbar} />
-        {view.name === "claims" && <ClaimsList functions={functions} />}
+        {view.name === "claims" && <ClaimsList view={view} functions={functions} />}
         {view.name === "businesses" && <BusinessesList functions={functions} />}
         {view.name === "viewclaim" && <ViewClaim view={view} functions={functions} />}
         {view.name === "viewbusiness" && <ViewBusiness view={view} />}
