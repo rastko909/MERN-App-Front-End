@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 // import AlertDialog from '../Shared/Alert';
+import ViewClaim from '../View';
 
 axios.defaults.withCredentials = true;
 
@@ -68,7 +69,155 @@ export default function ClaimLogin(props) {
 
   }
 
+  // FOR STYLING AND TESTING - RASTKO
+
+  // busid: CVY426
+  // secretkey: QJGA3KKV
+  // const dudClaim = {
+  //   comments: [],
+  //   attachments: [],
+  //   _id: 'wahtever',
+  //   id: 'Y6R7XJHP',
+  //   businessId: 'CVY426',
+  //   disclosureLevel: '1',
+  //   categories: { misconduct: true, health: true, influence: true },
+  //   details: {
+  //     answer_1: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_3: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_4: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_5: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_6: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_7: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_8: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_9: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_10: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_11: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_12: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_13: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_14: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_15: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_16: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //     answer_17: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ' +
+  //       'eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ' +
+  //       'enim ad minim veniam, quis nostrud exercitation ullamco laboris ' +
+  //       'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ' +
+  //       'in reprehenderit in voluptate velit esse cillum dolore eu fugiat ' +
+  //       'nulla pariatur. Excepteur sint occaecat cupidatat non proident, ' +
+  //       'sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  //   },
+  //   status: 'new',
+  //   confirmed: true,
+  //   timestamps: {
+  //     createdAt: 'Thu Jul 18 2019 12:12:36 GMT+1000 (Australian Eastern Standard Time)',
+  //     updatedAt: 'Thu Jul 18 2019 12:12:36 GMT+1000 (Australian Eastern Standard Time)',
+  //     actionedAt: 'undefined',
+  //     closedAt: 'undefined'
+  //   },
+  //   secretKey: '$2b$10$piEIT2TI8k9hAK9Q5dk20emwXdC9ngk17K8xygX7YGLSbtWVlQSRW',
+  //   __v: 0
+  // }
+
   const renderLogin = () => {
+    // FOR STYLING AND TESTING - RASTKO
+
+    // setClaimData(dudClaim)
     return (
       <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -118,34 +267,11 @@ export default function ClaimLogin(props) {
       </div>
     </Container>
     );
-  }
-
-  const renderClaimData = () => {
-
-    const { claimBusId, categories, details } = claimData;
-
-    return (
-      <div className="simple-container">
-        <h1>Claim for {claimBusId}</h1>
-
-        <h3>Categories:</h3>
-        {Object.keys(categories).map((category, index) => {
-          console.log("Category:", category);
-          return <p key={index}>{category}</p>  
-        })}
-
-        <h3>Answers:</h3>
-        {Object.values(details).map((answer, index) => {
-          console.log("Answer:", answer);
-          return (<p key={index}>{answer}</p>);
-        })}
-      </div>
-    );
-  }
+}
 
   return (
     <>
-      {claimData === null ? renderLogin() : renderClaimData()}
+      {claimData === null ? renderLogin() : <ViewClaim data={claimData} />}
     </>
   );
 }
