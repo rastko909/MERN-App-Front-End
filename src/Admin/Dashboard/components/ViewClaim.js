@@ -91,9 +91,6 @@ export default function ViewClaim({ view, functions }) {
               {/* <MenuItem value=""> */}
                 {/* <em>None</em> */}
               {/* </MenuItem> */}
-              {for(let i = 0; i < 3; i++) {
-
-              }}
               <MenuItem value={0}>Urgent</MenuItem>
               <MenuItem value={1}>High</MenuItem>
               <MenuItem value={2}>Medium</MenuItem>
