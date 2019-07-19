@@ -36,7 +36,9 @@ const createClaimRow = (id, name, businessId, status, date, priority) => {
   return { id, name, businessId, status, date, priority };
 }
 
-const getClaims = async (functions) => {
+const getClaims = async (view, functions) => {
+  const rows = [];
+
   try {
     const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard');
     let businessName = undefined;
@@ -59,15 +61,18 @@ const getClaims = async (functions) => {
   }
 }
 
-const rows = [];
+// const rows = [];
 
-export default function ClaimsList({ functions }) {
+export default function ClaimsList({ view, functions }) {
   const classes = useStyles();
 
   useEffect(() => {
-    if (rows.length < 1)
-      getClaims(functions);
-  }, [functions]);
+    if (!view.data)
+      getClaims(view, functions);
+  }, [view, functions]) 
+
+  if (!view.data)
+    return null;
 
   return (
     <Paper className={classes.root}>
@@ -83,7 +88,7 @@ export default function ClaimsList({ functions }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {view.data.map((row, index) => (
             <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
               <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
               <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
