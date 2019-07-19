@@ -53,7 +53,7 @@ export default function Home({view, functions}) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <NavBar view={view} functions={functions} />
+      <NavBar functions={functions} />
 
       <Drawer className={classes.drawer} variant="permanent" classes={{ paper: classes.drawerPaper, }}>
         <div className={classes.toolbar} />
