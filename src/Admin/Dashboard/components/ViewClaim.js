@@ -8,6 +8,9 @@ import Select from '@material-ui/core/Select';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { Button, FormControlLabel } from '@material-ui/core/';
 
+// Confirm Comment Dialog Box
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
+
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -25,8 +28,9 @@ const useStyles = makeStyles(theme => ({
 const getClaimData = async (functions, view) => {
   try {
     let claimId = view.id;
-    const claim = await axios.get(process.env.REACT_APP_API_URL + '/claim/find', {headers: {id: claimId}});
+    let claim = await axios.get(process.env.REACT_APP_API_URL + '/claim/find', {headers: {id: claimId}});
     console.log("Here's the claim data response", claim.data);
+    claim.data.comments = claim.data.comments.reverse();
     functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
   } catch (error) {
 
@@ -55,11 +59,12 @@ const updateStatus = async (view) => {
   }
 }
 
-const addComment = async (view, comment) => {
+const addComment = async (view, comment, functions) => {
   try {
     let claimId = view.id;
     const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', {id: claimId, comment: comment});
     console.log("Axios updateprioty reponse", response);
+    functions.setView({ name: 'viewclaim', id: claimId })
   } catch (error) {
 
   }
@@ -72,15 +77,12 @@ export default function ViewClaim({ view, functions }) {
   const [openPriority, setOpenPriority] = React.useState(false);
   const [openStatus, setOpenStatus] = React.useState(false);
   const [comment, setComment] = React.useState('');
+  const [confirmComment, setConfirmComment] = React.useState(false);
 
   function handlePriorityChange(event) {
     view.data.priority = event.target.value;
     updatePriority(view);
     setPriority(event.target.value);
-  }
-
-  function handleAddComment() {
-    addComment(view, comment)
   }
 
   function handlePriorityClose() {
@@ -93,6 +95,19 @@ export default function ViewClaim({ view, functions }) {
 
   function handleCommentUpdate(event) {
     setComment(event.target.value);
+  }
+
+  function handleOpenConfirmComment() {
+    setConfirmComment(true);
+  }
+
+  function handleCloseConfirmComment() {
+    setConfirmComment(false);
+  }
+
+  function handleAcceptCommentConfirm() {
+    addComment(view, comment, functions)
+    setConfirmComment(false);
   }
 
   function handleStatusChange(event) {
@@ -114,6 +129,18 @@ export default function ViewClaim({ view, functions }) {
       getClaimData(functions, view);
 
   }, [functions, view])
+
+
+  function renderComments(claim) {
+    return (
+      <>
+      <h3>Comments</h3>
+        {claim.comments.map((comment, index) => {
+          return <p key={index}>{comment.timestamp}: {comment.text}</p>
+        })}
+      </>
+    );
+  }
 
   const renderClaimData = () => {
     if (!view.data)
@@ -180,12 +207,39 @@ export default function ViewClaim({ view, functions }) {
           rows={5} />}
           labelPlacement='top'
         />
-        <Button className="submit-btn" variant="contained" onClick={() => handleAddComment(view, functions)} color="primary">Submit</Button>
+        {/* <Button className="submit-btn" variant="contained" onClick={() => handleAddComment(view, functions)} color="primary">Submit</Button> */}
+        <Button className="submit-btn" variant="contained" onClick={() => handleOpenConfirmComment(view, functions)} color="primary">Submit</Button>
 
-        <h3>Comments</h3>
-        {Object.values(claim.comments).map((comment, index) => {
+        <Dialog
+          open={confirmComment}
+          onClose={handleCloseConfirmComment}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"You are about to reply to a claim with this comment"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {comment}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseConfirmComment} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleAcceptCommentConfirm} color="primary" autoFocus>
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* onClick={handleClickOpen} */}
+
+
+        {claim.comments.length > 0 && renderComments(claim)}
+        {/* <h3>Comments</h3>
+        {claim.comments.map((comment, index) => {
           return <p key={index}>{comment.timestamp}: {comment.text}</p>
-        })}
+        })} */}
 
         <h3>Categories</h3>
         {Object.values(claim.categories).map((category, index) => {

@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function NewBusiness() {
+export default function NewBusiness({ view, functions }) {
   const [businessID, setBusinessID] = useState('');
   const [businessName, setBusinessName] = useState('');
   const [abn, setAbn] = useState('');
@@ -68,31 +68,31 @@ export default function NewBusiness() {
         Add New Business
       </Typography>
       <form className={classes.form} noValidate>
+
       <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="business_abn"
-          label="Business ABN"
-          name="business_abn"
-          autoComplete="business_abn"
-          autoFocus
-          onChange={(e) => setBusinessID(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="business_name"
-          label="Business Name"
-          name="business_name"
-          autoComplete="business_name"
-          autoFocus
-          onChange={(e) => setBusinessName(e.target.value)}
-        />
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="business_name"
+        label="Business Name"
+        name="business_name"
+        autoComplete="business_name"
+        autoFocus
+        onChange={(e) => setBusinessName(e.target.value)}
+      />
       <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="business_abn"
+        label="Business ABN"
+        name="business_abn"
+        autoComplete="business_abn"
+        onChange={(e) => setBusinessID(e.target.value)}
+      />
+      {/* <TextField
           variant="outlined"
           margin="normal"
           required
@@ -103,7 +103,7 @@ export default function NewBusiness() {
           autoComplete="business_id"
           autoFocus
           onChange={(e) => setAbn(e.target.value)}
-        />
+        /> */}
         <Button
           type="submit"
           fullWidth

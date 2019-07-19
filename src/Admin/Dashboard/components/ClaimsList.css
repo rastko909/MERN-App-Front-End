@@ -7,25 +7,25 @@
   text-transform: capitalize;
 }
 
-.new {
+.New {
   background: #f44336;
   padding: 0.25rem;
   color: white;
 }
 
-.open {
+.Open {
   background: #03a9f4;
   padding: 0.25rem;
   color: white;
 }
 
-.pending {
+.Pending {
   background: #4caf50;
   padding: 0.25rem;
   color: white;
 }
 
-.closed {
+.Closed {
   background: #212121;
   padding: 0.25rem;
   color: white;

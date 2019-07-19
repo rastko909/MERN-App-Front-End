@@ -3,7 +3,7 @@ import React, { /*useEffect*/ } from 'react';
 // import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
+import { AppBar, Button } from '@material-ui/core/';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -21,6 +21,8 @@ import BusinessesList from './BusinessesList';
 
 import ViewClaim from './ViewClaim';
 import ViewBusiness from './ViewBusiness';
+
+import NewBusiness from './NewBusiness';
 
 const drawerWidth = 240;
 
@@ -58,6 +60,8 @@ export default function Home({view, functions}) {
           <Typography variant="h6" noWrap>
             Adminstration Dashboard
           </Typography>
+          <Button color="inherit" onClick={() => functions.setView({ name: 'newbusiness' })}>Create Business</Button>
+          <Button color="inherit" onClick={() => functions.setView({ name: 'newclaim' })}>Create Claim</Button>
         </Toolbar>
       </AppBar>
 
@@ -81,6 +85,7 @@ export default function Home({view, functions}) {
         {view.name === "businesses" && <BusinessesList functions={functions} />}
         {view.name === "viewclaim" && <ViewClaim view={view} functions={functions} />}
         {view.name === "viewbusiness" && <ViewBusiness view={view} />}
+        {view.name === "newbusiness" && <NewBusiness view={view} functions={functions} />}
        </main>
        
     </div>
