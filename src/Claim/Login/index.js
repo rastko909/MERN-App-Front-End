@@ -129,13 +129,13 @@ export default function ClaimLogin(props) {
         <h1>Claim for {claimBusId}</h1>
 
         <h3>Categories:</h3>
-        {Object.keys(categories).forEach((category, index) => {
+        {Object.keys(categories).map((category, index) => {
           console.log("Category:", category);
           return <p key={index}>{category}</p>  
         })}
 
         <h3>Answers:</h3>
-        {Object.values(details).forEach((answer, index) => {
+        {Object.values(details).map((answer, index) => {
           console.log("Answer:", answer);
           return (<p key={index}>{answer}</p>);
         })}
