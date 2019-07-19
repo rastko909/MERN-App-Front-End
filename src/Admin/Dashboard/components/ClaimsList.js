@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, LinearProgress } from '@material-ui/core/';
 
 import axios from 'axios';
 import './ClaimsList.css';
@@ -41,7 +35,7 @@ const getOpenClaims = async (functions) => {
   const rows = [];
 
   try {
-    const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/all/open');
+    const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/all/find/open');
 
     for (let claim of claims.data)
       rows.push(createClaimRow(claim.id, claim.businessName, claim.businessId, functions.convertStatus(claim.status), claim.date, functions.convertPriority(claim.priority)));

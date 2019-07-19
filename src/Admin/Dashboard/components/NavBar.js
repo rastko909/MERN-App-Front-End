@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Toolbar, Typography, InputBase } from '@material-ui/core/';
 import SearchIcon from '@material-ui/icons/Search';
@@ -47,6 +49,18 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const seedData = async (functions) => {
+  try {
+    const response = await axios.get(process.env.REACT_APP_API_URL + '/seed');
+    console.log("Seed data response:", response);
+
+    setTimeout(() => {functions.setView({ name: "openclaims" })}, 1500);
+    
+  } catch(error) {
+    console.log("Caught an error requesting data to be seeded:\n", error.message);
+  }
+}
+
 export default function NavBar({functions}) {
 
   const classes = useStyles();
@@ -72,6 +86,7 @@ export default function NavBar({functions}) {
 
           <Button color="inherit" onClick={() => functions.setView({ name: 'newbusiness' })}>Create Business</Button>
           <Button color="inherit" onClick={() => functions.setView({ name: 'newclaim' })}>Create Claim</Button>
+          <Button color="inherit" onClick={() => seedData(functions)}><strong>DELETE AND SEED DATA</strong></Button>
         </Toolbar>
       </AppBar>
     </>

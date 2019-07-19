@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home({view, functions}) {
   const classes = useStyles();
-  console.log("Home view values: (name/id/data)", view.name, view.id, view.data);
+  console.log("view.name is set to:", view.name);
 
   return (
     <div className={classes.root}>
@@ -40,7 +40,8 @@ export default function Home({view, functions}) {
         {view.name === "openclaims" && <ClaimsList view={view} functions={functions} />}
         {view.name === "businesses" && <BusinessesList functions={functions} />}
         {view.name === "viewclaim" && <ViewClaim view={view} functions={functions} />}
-        {view.name === "viewbusiness" && <ViewBusiness view={view} />}
+        {view.name === "viewbusiness" && <ViewBusiness view={view} functions={functions} />}
+        {/* {view.name === "newbusiness" && <NewClaim view={view} functions={functions} />} */}
         {view.name === "newbusiness" && <NewBusiness view={view} functions={functions} />}
       </main>
        

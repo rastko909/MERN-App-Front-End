@@ -24,10 +24,7 @@ const useStyles = makeStyles(theme => ({
 const handleClick = (e, id, functions, type) => {
   e.stopPropagation();
   console.log("Businesses handleClick:", id);
-  if (type === "business")
-    functions.setView({ name: 'viewclaim', id: id, data: undefined })
-  else if (type === "business")
-    functions.setView({ name: 'viewbusiness', id: id, data: undefined })
+  functions.setView({ name: 'viewbusiness', id: id, data: undefined })
 }
 
 const rows = [];
