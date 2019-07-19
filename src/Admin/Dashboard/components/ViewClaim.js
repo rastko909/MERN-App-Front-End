@@ -5,7 +5,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -40,14 +39,15 @@ export default function ViewClaim({ view, functions }) {
   const [open, setOpen] = React.useState(false);
 
   function handleChange(event) {
+    view.data.priority = event.target.value;
     setPriority(event.target.value);
   }
 
-  function handleClose() {
+  function handlePriorityClose() {
     setOpen(false);
   }
 
-  function handleOpen() {
+  function handlePriorityOpen() {
     setOpen(true);
   }
 
@@ -56,10 +56,6 @@ export default function ViewClaim({ view, functions }) {
       getClaimData(functions, view);
 
   }, [functions, view])
-
-  const renderPriorities = () => {
-
-  }
 
   const renderClaimData = () => {
     if (!view.data)
@@ -72,35 +68,28 @@ export default function ViewClaim({ view, functions }) {
         <h1>{claim.id}</h1>
 
         <form autoComplete="off">
-          {/* <Button className={classes.button} onClick={handleOpen}> */}
-            {/* Open the select */}
-          {/* </Button> */}
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="priority-select">Priority</InputLabel>
             <Select
               open={open}
-              onClose={handleClose}
-              onOpen={handleOpen}
-              value={priority}
+              onClose={handlePriorityClose}
+              onOpen={handlePriorityOpen}
+              value={view.data.priority}
               onChange={handleChange}
               inputProps={{
                 name: 'priority',
                 id: 'priority-select',
-              }}
-            >
-              {/* <MenuItem value=""> */}
-                {/* <em>None</em> */}
-              {/* </MenuItem> */}
-              <MenuItem value={0}>Urgent</MenuItem>
-              <MenuItem value={1}>High</MenuItem>
-              <MenuItem value={2}>Medium</MenuItem>
+              }} >
               <MenuItem value={3}>Low</MenuItem>
+              <MenuItem value={2}>Medium</MenuItem>
+              <MenuItem value={1}>High</MenuItem>
+              <MenuItem value={0}>Urgent</MenuItem>
             </Select>
           </FormControl>
         </form>
         <h3>Categories</h3>
-        {Object.keys(claim.categories).map((category, index) => {
-          return <p key={index}>{category}</p>
+        {Object.values(claim.categories).map((category, index) => {
+          return <p key={index}>{category.label}</p>
         })}
 
         <h3>Answers</h3>
