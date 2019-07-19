@@ -68,8 +68,7 @@ class Form extends React.Component {
 
   sendAnswers = async () => {
     const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim);
-    let claimId = response.data.id;
-    console.log(claimId)
+    let claimId = response.data.claimId;
     const { business_id } = this.state.newClaim;
 
     if (response.status !== 200) {
@@ -82,7 +81,6 @@ class Form extends React.Component {
       for (const file of files) {
         formData.append('file', file)
       }
-      console.log(formData)
 
       await this.uploadImages(claimId, business_id, formData)
       console.log(`{ RENDER 'Secret key with disclaimer': ${response.data.secretKey}`);
