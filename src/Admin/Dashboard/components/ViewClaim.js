@@ -36,11 +36,11 @@ const getClaimData = async (functions, view) => {
 
 export default function ViewClaim({ view, functions }) {
   const classes = useStyles();
-  const [age, setAge] = React.useState('');
+  const [priority, setPriority] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
   function handleChange(event) {
-    setAge(event.target.value);
+    setPriority(event.target.value);
   }
 
   function handleClose() {
@@ -57,6 +57,10 @@ export default function ViewClaim({ view, functions }) {
 
   }, [functions, view])
 
+  const renderPriorities = () => {
+
+  }
+
   const renderClaimData = () => {
     if (!view.data)
       return null;
@@ -65,35 +69,38 @@ export default function ViewClaim({ view, functions }) {
 
     return (
       <>
+        <h1>{claim.id}</h1>
+
         <form autoComplete="off">
-          <Button className={classes.button} onClick={handleOpen}>
-            Open the select
-          </Button>
+          {/* <Button className={classes.button} onClick={handleOpen}> */}
+            {/* Open the select */}
+          {/* </Button> */}
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="demo-controlled-open-select">Age</InputLabel>
+            <InputLabel htmlFor="priority-select">Priority</InputLabel>
             <Select
               open={open}
               onClose={handleClose}
               onOpen={handleOpen}
-              value={age}
+              value={priority}
               onChange={handleChange}
               inputProps={{
-                name: 'age',
-                id: 'demo-controlled-open-select',
+                name: 'priority',
+                id: 'priority-select',
               }}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {/* <MenuItem value=""> */}
+                {/* <em>None</em> */}
+              {/* </MenuItem> */}
+              {for(let i = 0; i < 3; i++) {
+
+              }}
+              <MenuItem value={0}>Urgent</MenuItem>
+              <MenuItem value={1}>High</MenuItem>
+              <MenuItem value={2}>Medium</MenuItem>
+              <MenuItem value={3}>Low</MenuItem>
             </Select>
           </FormControl>
         </form>
-        
-        <h1>{claim.id}</h1>
-
         <h3>Categories</h3>
         {Object.keys(claim.categories).map((category, index) => {
           return <p key={index}>{category}</p>
