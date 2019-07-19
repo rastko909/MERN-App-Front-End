@@ -12,14 +12,18 @@ export default class Dashboard extends React.Component {
 
   state = {
     view: {
-      name: 'claims',
+      name: 'openclaims',
       id: undefined,
       data: undefined, 
     },
   };
 
   setView = (viewObject) => {
-    console.log("Setting the view: (name/id/data)", viewObject.name, viewObject.id, viewObject.data);
+    console.log("------------ index.js: setView() ------------------");
+    console.log("setView: {name}:", viewObject.name);
+    console.log("setView: {id}:", viewObject.id);
+    console.log("setView: {data}:", viewObject.data);
+    console.log("----------------------- END -----------------------");
 
     this.setState({
       view: {

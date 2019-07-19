@@ -33,47 +33,35 @@ const handleClick = (e, id, functions, type) => {
     functions.setView({ name: 'viewbusiness', id: id, data: undefined })
 }
 
-const createClaimRow = (id, name, businessId, status, date, priority) => {
-  return { id, name, businessId, status, date, priority };
+const createClaimRow = (id, businessName, businessId, status, date, priority) => {
+  return { id, businessName, businessId, status, date, priority };
 }
 
-const getClaims = async (view, functions) => {
-  const rows = [];
-
+const getOpenClaims = async (functions) => {
   try {
-    const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard');
-    let businessName = undefined;
-    for (let claim of claims.data) {
-      const businessId = claim.businessId;
-      try {
-        const business = await axios.get(process.env.REACT_APP_API_URL + '/business/find', { headers: { id: businessId } })
-        businessName = business.data.name;
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        rows.push(createClaimRow(claim.id, businessName, claim.businessId, functions.convertStatus(claim.status), claim.timestamps.createdAt, functions.convertPriority(claim.priority)));
-      }
-    }
+    const rows = [];
+    const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/all/open');
+
+    for (let claim of claims.data)
+      rows.push(createClaimRow(claim.id, claim.businessName, claim.businessId, functions.convertStatus(claim.status), claim.date, functions.convertPriority(claim.priority)));
 
   } catch (error) {
     console.log("An exception was caught:", error);
   } finally {
-    functions.setView({ name: "claims", id: undefined, data: rows });
+    functions.setView({ name: "openclaims", id: undefined, data: rows });
   }
 }
-
-// const rows = [];
 
 export default function ClaimsList({ view, functions }) {
   const classes = useStyles();
 
   useEffect(() => {
     if (!view.data)
-      getClaims(view, functions);
-  }, [view, functions]) 
+      getOpenClaims(functions);
+  }, [functions]) 
 
   if (!view.data)
-    return <LinearProgress />;
+    return (<LinearProgress />);
 
   return (
     <Paper className={classes.root}>
@@ -92,7 +80,7 @@ export default function ClaimsList({ view, functions }) {
           {view.data.map((row, index) => (
             <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
               <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
-              <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
+              <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.businessName}</span></TableCell>
               <TableCell align="right">
                 <span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'monospaced link-hover'}>{row.businessId}</span>
               </TableCell>
