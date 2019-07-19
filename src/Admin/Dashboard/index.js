@@ -1,16 +1,34 @@
 import React from 'react';
-import DashboardHome from './components/DashboardHome';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+
+// import DashboardHome from './components/DashboardHome';
+// import Navbar from './components/Navbar';
+// import Sidebar from './components/Sidebar';
+
+import Home from './components/Home';
+// import './index.css';
 
 export default class Dashboard extends React.Component {
 
   state = {
-    view: 'dashboard',
+    view: {
+      name: 'claims',
+      id: undefined,
+      data: undefined, 
+    },
   };
 
-  setView = (view) => {
-    this.setState({ view: view })
-  }
+  setView = (viewObject) => {
+    console.log("Setting the view: (name/id/data)", viewObject.name, viewObject.id, viewObject.data);
 
+    this.setState({
+      view: {
+        name: viewObject.name || undefined,
+        id: viewObject.id || undefined,
+        data: viewObject.data || undefined,
+      }
+    })
+  }
 
   convertStatus = (number) => {
     const statuses = ["new", "open", "pending", "closed"];
@@ -34,11 +52,19 @@ export default class Dashboard extends React.Component {
     };
   }
 
-  render = () => { 
+  handleView = () => {
+    switch(this.state.view) {
+      case 'claims':
+        return 
+
+      default:
+        return null;
+    }
+  }
+
+  render = () => {
     return (
-      <>
-        <DashboardHome functions={this.usableFunctions()} />
-      </>
+      <Home view={this.state.view} functions={this.usableFunctions()} />
     );
   }
 }
