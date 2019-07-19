@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
 
 const handleClick = (e, id, functions, type) => {
   e.stopPropagation();
-
   console.log("ClaimsList handleClick:", id);
   if (type === "claim")
     functions.setView({ name: 'viewclaim', id: id, data: undefined })
@@ -35,7 +34,7 @@ const handleClick = (e, id, functions, type) => {
 }
 
 const createClaimRow = (id, name, businessId, status, date, priority) => {
-  return {id, name, businessId, status, date, priority };
+  return { id, name, businessId, status, date, priority };
 }
 
 const getClaims = async (view, functions) => {
@@ -44,12 +43,10 @@ const getClaims = async (view, functions) => {
   try {
     const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard');
     let businessName = undefined;
-    
-    for(let claim of claims.data) {
+    for (let claim of claims.data) {
       const businessId = claim.businessId;
-
       try {
-        const business = await axios.get(process.env.REACT_APP_API_URL + '/business/find', {headers: {id: businessId}})
+        const business = await axios.get(process.env.REACT_APP_API_URL + '/business/find', { headers: { id: businessId } })
         businessName = business.data.name;
       } catch (error) {
         console.log(error.message);
@@ -61,7 +58,7 @@ const getClaims = async (view, functions) => {
   } catch (error) {
     console.log("An exception was caught:", error);
   } finally {
-    functions.setView({name: "claims", id: undefined, data: rows});
+    functions.setView({ name: "claims", id: undefined, data: rows });
   }
 }
 
@@ -69,7 +66,7 @@ const getClaims = async (view, functions) => {
 
 export default function ClaimsList({ view, functions }) {
   const classes = useStyles();
-  
+
   useEffect(() => {
     if (!view.data)
       getClaims(view, functions);
@@ -84,10 +81,10 @@ export default function ClaimsList({ view, functions }) {
         <TableHead>
           <TableRow>
             <TableCell>Claim ID</TableCell>
-            <TableCell>Business Name</TableCell>
-            <TableCell align="center">Business ID</TableCell>
+            <TableCell align="right">Business Name</TableCell>
+            <TableCell align="right">Business ID</TableCell>
             <TableCell align="center">Status</TableCell>
-            <TableCell align="center">Lodgement Date</TableCell>
+            <TableCell align="right">Lodgement Date</TableCell>
             <TableCell align="right">Priority</TableCell>
           </TableRow>
         </TableHead>
@@ -95,11 +92,11 @@ export default function ClaimsList({ view, functions }) {
           {view.data.map((row, index) => (
             <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
               <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
-              <TableCell align="left"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
-              <TableCell align="center">
+              <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
+              <TableCell align="right">
                 <span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'monospaced link-hover'}>{row.businessId}</span>
               </TableCell>
-              <TableCell align="center"><span className={'status ' + row.status}>{row.status}</span></TableCell>
+              <TableCell align="right"><div className={'status ' + row.status}>{row.status}</div></TableCell>
               <TableCell>{row.date}</TableCell>
               <TableCell align="right"><span className={'priority'}>{row.priority}</span></TableCell>
             </TableRow>

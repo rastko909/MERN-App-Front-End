@@ -1,6 +1,10 @@
 .status { 
   text-transform: capitalize;
   border-radius: 0.25rem;
+  /* border: 1px solid red; */
+  width: 100% !important;
+  text-align: center;
+  /* font-weight: bold; */
 }
 
 .priority {
