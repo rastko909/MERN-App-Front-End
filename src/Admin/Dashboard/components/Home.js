@@ -1,3 +1,4 @@
+
 import React, { /*useEffect*/ } from 'react';
 // import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +17,10 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import BallotIcon from '@material-ui/icons/Ballot';
 
 import ClaimsList from './ClaimsList';
+import BusinessesList from './BusinessesList';
+
+import ViewClaim from './ViewClaim';
+import ViewBusiness from './ViewBusiness';
 
 const drawerWidth = 240;
 
@@ -40,12 +45,14 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-export default function DashboardHome({functions}) {
+export default function Home({view, functions}) {
   const classes = useStyles();
+  console.log("Home view values: (name/id/data)", view.name, view.id, view.data);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
+
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
@@ -53,27 +60,29 @@ export default function DashboardHome({functions}) {
           </Typography>
         </Toolbar>
       </AppBar>
+
       <Drawer className={classes.drawer} variant="permanent" classes={{ paper: classes.drawerPaper, }}>
         <div className={classes.toolbar} />
-
         <List>
-          <ListItem button>
+          <ListItem button onClick={() => functions.setView({ name: 'claims' })}>
             <ListItemIcon><ViewListIcon /></ListItemIcon>
             <ListItemText primary='Claims' />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={() => functions.setView({ name: 'businesses' })}>
             <ListItemIcon><BallotIcon /></ListItemIcon>
             <ListItemText primary='Businesses' />
           </ListItem>
         </List>
-
-        {/* <Divider /> */}
       </Drawer>
-      
-      <main className={classes.content}>
+
+       <main className={classes.content}>
         <div className={classes.toolbar} />
-          <ClaimsList functions={functions}/>
-      </main>
+        {view.name === "claims" && <ClaimsList functions={functions} />}
+        {view.name === "businesses" && <BusinessesList functions={functions} />}
+        {view.name === "viewclaim" && <ViewClaim view={view} functions={functions} />}
+        {view.name === "viewbusiness" && <ViewBusiness view={view} />}
+       </main>
+       
     </div>
   );
 }

@@ -5,9 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-// import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// import { sizing } from '@material-ui/system';
+import NavBar from '../../Home/components/NavBar';
 import './index.css'
 
 const useStyles = makeStyles(theme => ({
@@ -20,12 +19,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function ViewClaim(props) {
   const classes = useStyles();
-
-  const { claimBusId, timestamps, status, categories, comments, details } = props.data
-  console.log(props)
-  console.log(categories)
-
+  const { claimBusId, timestamps, status, categories, details, questions } = props.data
   return (
+    <>
+    <NavBar />
     <div className="view-claim-container">
       <div className="view-claim-paper">
         <Paper className={classes.root}>
@@ -52,9 +49,10 @@ export default function ViewClaim(props) {
                 <TableRow hover={true}>
                   <TableCell><strong>Categories: </strong> </TableCell>
                   <TableCell>
-                    {Object.keys(categories).map((category, index) => {
+                    {Object.values(categories).map((category, index) => {
+                      console.log(category)
                       return (
-                        <span key={index} className="category">{category}</span>
+                        <span key={index} className="category">{category.label},</span>
                       )})}
                   </TableCell>
                 </TableRow>
@@ -66,7 +64,7 @@ export default function ViewClaim(props) {
               return (
                 <div key={index} className="question-answer-container">
                   <div key={index} className="question">
-                    <Typography component="p" key={index}><strong>Q{index + 1}: Question goes here?</strong></Typography>
+                    <Typography component="p" key={index}><strong>Q{index + 1}: {questions[index]}</strong></Typography>
                   </div>
                   <div className="answer">
                     <Typography component="p" key={index}>{answer}</Typography>
@@ -76,5 +74,6 @@ export default function ViewClaim(props) {
         </Paper>
       </div>
     </div>
+    </>
   );
 }
