@@ -1,4 +1,5 @@
 .form-container {
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -33,10 +34,11 @@
   /* padding: 0.5rem; */
   margin: 0;
   width: 80%;
-  background: #135E89;
-  color: white;
+  /* background: #135E89; */
+  border-bottom: 1px solid black;
+  color: black;
   padding: 0.5rem;
-  border-radius: 0.25rem;
+  /* border-radius: 0.25rem; */
 }
 
 .categories {
@@ -83,6 +85,30 @@
 .question {
   font-size: 1rem;
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+}
+
+.question-mark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #135E89;
+  border-radius: 50%;
+  color: white;
+  padding: 1.2rem;
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.question-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
 }
 
 .button-row {
