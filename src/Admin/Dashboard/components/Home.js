@@ -53,19 +53,7 @@ export default function Home({view, functions}) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-
       <NavBar view={view} functions={functions} />
-
-{/* 
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Adminstration Dashboard
-          </Typography>
-          <Button color="inherit" onClick={() => functions.setView({ name: 'newbusiness' })}>Create Business</Button>
-          <Button color="inherit" onClick={() => functions.setView({ name: 'newclaim' })}>Create Claim</Button>
-        </Toolbar>
-      </AppBar> */}
 
       <Drawer className={classes.drawer} variant="permanent" classes={{ paper: classes.drawerPaper, }}>
         <div className={classes.toolbar} />

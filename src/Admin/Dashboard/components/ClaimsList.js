@@ -84,7 +84,7 @@ export default function ClaimsList({ view, functions }) {
             <TableCell align="right">Business Name</TableCell>
             <TableCell align="right">Business ID</TableCell>
             <TableCell align="center">Status</TableCell>
-            <TableCell align="right">Lodgement Date</TableCell>
+            <TableCell align="center">Lodgement Date</TableCell>
             <TableCell align="right">Priority</TableCell>
           </TableRow>
         </TableHead>
@@ -97,7 +97,7 @@ export default function ClaimsList({ view, functions }) {
                 <span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'monospaced link-hover'}>{row.businessId}</span>
               </TableCell>
               <TableCell align="right"><div className={'status ' + row.status}>{row.status}</div></TableCell>
-              <TableCell>{row.date}</TableCell>
+              <TableCell align="center">{row.date}</TableCell>
               <TableCell align="right"><span className={'priority'}>{row.priority}</span></TableCell>
             </TableRow>
           ))}

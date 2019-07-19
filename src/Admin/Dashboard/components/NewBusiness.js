@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 export default function NewBusiness({ view, functions }) {
   const [businessID, setBusinessID] = useState('');
   const [businessName, setBusinessName] = useState('');
-  const [abn, setAbn] = useState('');
+  const [abn, /*setAbn*/] = useState('');
 
   const classes = useStyles();
   
