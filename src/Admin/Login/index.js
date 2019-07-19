@@ -1,4 +1,4 @@
-import React, { /*useEffect,*/ useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Container, Typography, makeStyles } from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
@@ -73,7 +73,11 @@ export default function SignIn(props) {
   }
 
   // review when i understand hookds better 
-  // useEffect(() => { console.log('use effect') }, [flag])
+  // useEffect(() => { 
+  //   if (document.cookie) {
+  //     props.history.push('/admin/dashboard')
+  //   }
+  //  }, [])
 
   return (
     <Container component="main" maxWidth="xs">
