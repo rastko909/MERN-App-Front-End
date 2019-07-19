@@ -23,17 +23,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const handleClick = (e, id) => {
+const handleClick = (e, id, functions, type) => {
   e.stopPropagation();
-  alert("Hey, you just clicked " + id);
+
+  console.log("ClaimsList handleClick:", id);
+  if (type === "claim")
+    functions.setView({ name: 'viewclaim', id: id, data: undefined })
+  else if (type === "business")
+    functions.setView({ name: 'viewbusiness', id: id, data: undefined })
 }
 
-const createData = (id, name, businessId, status, date, priority) => {
+const createClaimRow = (id, name, businessId, status, date, priority) => {
   return {id, name, businessId, status, date, priority };
 }
 
-const rows = [];
-  
 const getClaims = async (functions) => {
   try {
     const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard');
@@ -44,22 +47,22 @@ const getClaims = async (functions) => {
 
       try {
         const business = await axios.get(process.env.REACT_APP_API_URL + '/business/find', {headers: {id: businessId}})
-        console.log("Here's the business name:", business.data);
         businessName = business.data.name;
       } catch (error) {
         console.log(error.message);
       } finally {
-        rows.push(createData(claim.id, businessName, claim.businessId, functions.convertStatus(claim.status), claim.timestamps.createdAt, functions.convertPriority(claim.priority)));
+        rows.push(createClaimRow(claim.id, businessName, claim.businessId, functions.convertStatus(claim.status), claim.timestamps.createdAt, functions.convertPriority(claim.priority)));
       }
     }
 
   } catch (error) {
     console.log("An exception was caught:", error);
   } finally {
-    functions.setView("home");
+    functions.setView({name: "claims", id: undefined, data: rows});
   }
 }
 
+const rows = [];
 
 export default function ClaimsList({ functions }) {
   const classes = useStyles();
@@ -84,11 +87,11 @@ export default function ClaimsList({ functions }) {
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
-            <TableRow key={index} onClick={(e) => handleClick(e, row.id)} className="table-row" >
-              <TableCell><span onClick={(e) => handleClick(e, row.id)} className={'monospaced link-hover'}>{row.id}</span></TableCell>
-              <TableCell align="left"><span onClick={(e) => handleClick(e, row.businessId)} className={'link-hover'}>{row.name}</span></TableCell>
+            <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
+              <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
+              <TableCell align="left"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
               <TableCell align="center">
-                <span onClick={(e) => handleClick(e, row.businessId)} className={'monospaced link-hover'}>{row.businessId}</span>
+                <span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'monospaced link-hover'}>{row.businessId}</span>
               </TableCell>
               <TableCell align="center"><span className={'status ' + row.status}>{row.status}</span></TableCell>
               <TableCell>{row.date}</TableCell>

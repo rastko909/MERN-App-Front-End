@@ -32,6 +32,7 @@ class Form extends React.Component {
 
   state = {
     complete: false,
+    files: [],
     pagination: {
       page: {
         currentPage: 0,
@@ -42,13 +43,13 @@ class Form extends React.Component {
       business_id: "",
       questions: questions,
       answers: {},
-      categories: {}
-    }
+      categories: {},
+    },
+    
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state);
 
     const exists = await this.checkId();
 
@@ -67,11 +68,34 @@ class Form extends React.Component {
 
   sendAnswers = async () => {
     const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim);
+    let claimId = response.data.id;
+    console.log(claimId)
+    const { business_id } = this.state.newClaim;
 
+    if (response.status !== 200) {
+      console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
+    }
+    else {
+      let formData = new FormData()
+      let files = this.state.files
+
+      for (const file of files) {
+        formData.append('file', file)
+      }
+      console.log(formData)
+
+      await this.uploadImages(claimId, business_id, formData)
+      console.log(`{ RENDER 'Secret key with disclaimer': ${response.data.secretKey}`);
+    }
+      
+  }
+  
+  uploadImages = async (claimId, businessId, formData) => {
+    const response = await axios.post(process.env.REACT_APP_API_URL + "/upload", formData, {headers: { claimId, businessId  }})
     if (response.status !== 200)
       console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
     else
-      console.log(`{ RENDER 'Secret key with disclaimer': ${response.data.secretKey}`);
+      console.log(response.data, 'File upload success');
   }
 
   handleBusinessID = (event) => {
@@ -79,6 +103,12 @@ class Form extends React.Component {
     newState.newClaim[event.target.id] = event.target.value
     this.setState(newState)
   }
+
+  handleUpload(files){
+    let newState = this.state
+    newState.files = files
+    this.setState(newState);
+    };
 
   handleChange = (event) => {
     if (event.target.type === "checkbox") {
@@ -197,6 +227,7 @@ class Form extends React.Component {
             <div className="dropzone-container">
               <p id="dropzone-description" className='question'>
                 Please attach any relevant documents below:</p>
+
               <DropzoneArea
                 showPreviews={true}
                 showPreviewsInDropzone={false}
@@ -204,8 +235,10 @@ class Form extends React.Component {
                 dropzoneText={''}
                 dropzoneClass={'dropzone-custom'}
                 maxFileSize={25000000}
+                onChange={this.handleUpload.bind(this)}
               />
             </div>
+
             <div className="button-row">
               <Button className="submit-btn" variant="contained" onClick={this.handleSubmit} color="primary">
                 Submit

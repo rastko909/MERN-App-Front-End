@@ -126,7 +126,7 @@ export default function ClaimLogin(props) {
     </div>
     </>
     );
-    }
+}
 
   return (
     <>

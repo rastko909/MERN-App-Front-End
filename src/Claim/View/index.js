@@ -5,9 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-// import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// import { sizing } from '@material-ui/system';
 import NavBar from '../../Home/components/NavBar';
 import './index.css'
 
@@ -20,10 +18,8 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function ViewClaim(props) {
-  
   const classes = useStyles();
   const { claimBusId, timestamps, status, categories, details, questions } = props.data
-  
   return (
     <>
     <NavBar />
