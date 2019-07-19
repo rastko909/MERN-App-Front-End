@@ -31,7 +31,7 @@ export default class Dashboard extends React.Component {
   }
 
   convertStatus = (number) => {
-    const statuses = ["new", "open", "pending", "closed"];
+    const statuses = ["New", "Open", "Pending", "Closed"];
 
     if (number > (statuses.length - 1))
       return statuses[0];

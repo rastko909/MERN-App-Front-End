@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import axios from 'axios';
 import './ClaimsList.css';
@@ -72,7 +73,7 @@ export default function ClaimsList({ view, functions }) {
   }, [view, functions]) 
 
   if (!view.data)
-    return null;
+    return <LinearProgress />;
 
   return (
     <Paper className={classes.root}>
