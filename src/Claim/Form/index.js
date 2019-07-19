@@ -68,7 +68,8 @@ class Form extends React.Component {
 
   sendAnswers = async () => {
     const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim);
-    let claimId = response.data.claimId;
+    let claimId = response.data.id;
+    console.log(claimId)
     const { business_id } = this.state.newClaim;
 
     if (response.status !== 200) {
