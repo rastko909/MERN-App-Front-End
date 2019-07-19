@@ -38,8 +38,9 @@ const createClaimRow = (id, businessName, businessId, status, date, priority) =>
 }
 
 const getOpenClaims = async (functions) => {
+  const rows = [];
+
   try {
-    const rows = [];
     const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/all/open');
 
     for (let claim of claims.data)
@@ -58,7 +59,7 @@ export default function ClaimsList({ view, functions }) {
   useEffect(() => {
     if (!view.data)
       getOpenClaims(functions);
-  }, [functions]) 
+  }, [view, functions]) 
 
   if (!view.data)
     return (<LinearProgress />);
