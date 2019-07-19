@@ -1,6 +1,10 @@
 .status { 
   text-transform: capitalize;
   border-radius: 0.25rem;
+  /* border: 1px solid red; */
+  width: 100% !important;
+  text-align: center;
+  /* font-weight: bold; */
 }
 
 .priority {
@@ -8,25 +12,25 @@
 }
 
 .new {
-  background: #f44336;
+  background: #F44336;
   padding: 0.25rem;
   color: white;
 }
 
 .open {
-  background: #03a9f4;
+  background: #4CAF50;
   padding: 0.25rem;
   color: white;
 }
 
 .pending {
-  background: #4caf50;
+  background:#FF9800;
   padding: 0.25rem;
   color: white;
 }
 
 .closed {
-  background: #212121;
+  background: #3F51B5;
   padding: 0.25rem;
   color: white;
 }
