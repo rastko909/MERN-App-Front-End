@@ -33,9 +33,7 @@ const getClaimData = async (functions, view) => {
     claim.data.comments = claim.data.comments.reverse();
     functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
   } catch (error) {
-
-  } finally {
-
+    console.log("Caught an error requesting data:\n", error.message);
   }
 }
 
@@ -45,7 +43,7 @@ const updatePriority = async (view) => {
     const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/update/priority', {id: claimId, priority: view.data.priority});
     console.log("Axios updateprioty reponse", response);
   } catch (error) {
-
+    console.log("Caught an error requesting data:\n", error.message);
   }
 }
 
@@ -55,7 +53,7 @@ const updateStatus = async (view) => {
     const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/update/status', {id: claimId, status: view.data.status});
     console.log("Axios updateprioty reponse", response);
   } catch (error) {
-
+    console.log("Caught an error requesting data:\n", error.message);
   }
 }
 
@@ -66,7 +64,7 @@ const addComment = async (view, comment, functions) => {
     console.log("Axios updateprioty reponse", response);
     functions.setView({ name: 'viewclaim', id: claimId })
   } catch (error) {
-
+    console.log("Caught an error requesting data:\n", error.message);
   }
 }
 

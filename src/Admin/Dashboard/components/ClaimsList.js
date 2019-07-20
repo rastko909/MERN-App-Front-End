@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, LinearProgress } from '@material-ui/core/';
 
 import axios from 'axios';
 import './ClaimsList.css';
@@ -33,47 +27,36 @@ const handleClick = (e, id, functions, type) => {
     functions.setView({ name: 'viewbusiness', id: id, data: undefined })
 }
 
-const createClaimRow = (id, name, businessId, status, date, priority) => {
-  return { id, name, businessId, status, date, priority };
+const createClaimRow = (id, businessName, businessId, status, date, priority) => {
+  return { id, businessName, businessId, status, date, priority };
 }
 
-const getClaims = async (view, functions) => {
+const getOpenClaims = async (functions) => {
   const rows = [];
 
   try {
-    const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard');
-    let businessName = undefined;
-    for (let claim of claims.data) {
-      const businessId = claim.businessId;
-      try {
-        const business = await axios.get(process.env.REACT_APP_API_URL + '/business/find', { headers: { id: businessId } })
-        businessName = business.data.name;
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        rows.push(createClaimRow(claim.id, businessName, claim.businessId, functions.convertStatus(claim.status), claim.timestamps.createdAt, functions.convertPriority(claim.priority)));
-      }
-    }
+    const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/all/find/open');
+
+    for (let claim of claims.data)
+      rows.push(createClaimRow(claim.id, claim.businessName, claim.businessId, functions.convertStatus(claim.status), claim.date, functions.convertPriority(claim.priority)));
 
   } catch (error) {
     console.log("An exception was caught:", error);
   } finally {
-    functions.setView({ name: "claims", id: undefined, data: rows });
+    functions.setView({ name: "openclaims", id: undefined, data: rows });
   }
 }
-
-// const rows = [];
 
 export default function ClaimsList({ view, functions }) {
   const classes = useStyles();
 
   useEffect(() => {
     if (!view.data)
-      getClaims(view, functions);
+      getOpenClaims(functions);
   }, [view, functions]) 
 
   if (!view.data)
-    return <LinearProgress />;
+    return (<LinearProgress />);
 
   return (
     <Paper className={classes.root}>
@@ -84,7 +67,7 @@ export default function ClaimsList({ view, functions }) {
             <TableCell align="right">Business Name</TableCell>
             <TableCell align="right">Business ID</TableCell>
             <TableCell align="center">Status</TableCell>
-            <TableCell align="right">Lodgement Date</TableCell>
+            <TableCell align="center">Lodgement Date</TableCell>
             <TableCell align="right">Priority</TableCell>
           </TableRow>
         </TableHead>
@@ -92,12 +75,12 @@ export default function ClaimsList({ view, functions }) {
           {view.data.map((row, index) => (
             <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
               <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
-              <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
+              <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.businessName}</span></TableCell>
               <TableCell align="right">
                 <span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'monospaced link-hover'}>{row.businessId}</span>
               </TableCell>
               <TableCell align="right"><div className={'status ' + row.status}>{row.status}</div></TableCell>
-              <TableCell>{row.date}</TableCell>
+              <TableCell align="center">{row.date}</TableCell>
               <TableCell align="right"><span className={'priority'}>{row.priority}</span></TableCell>
             </TableRow>
           ))}

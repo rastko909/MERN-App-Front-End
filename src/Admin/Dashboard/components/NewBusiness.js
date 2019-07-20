@@ -31,26 +31,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewBusiness({ view, functions }) {
-  const [businessID, setBusinessID] = useState('');
   const [businessName, setBusinessName] = useState('');
   const [abn, setAbn] = useState('');
 
   const classes = useStyles();
   
   const handleSubmit = (e) => {
-    console.log(businessID);
     console.log(businessName);
     console.log(abn);
     e.preventDefault();
-    createBusiness(businessID, businessName, abn);
+    createBusiness(businessName, abn);
   }
 
-  const createBusiness = async (businessID, businessName, abn) => {
-    const data = { businessID, businessName, abn }
+  const createBusiness = async (businessName, abn) => {
+    const data = { businessName, abn }
 
     try {
       let response = await axios.post(process.env.REACT_APP_API_URL + '/business/new', data);
       console.log(response);
+      functions.setView({ name: "viewbusiness", id: response.data.id });
     }
     catch (error) {
       console.log(error);
@@ -90,7 +89,7 @@ export default function NewBusiness({ view, functions }) {
         label="Business ABN"
         name="business_abn"
         autoComplete="business_abn"
-        onChange={(e) => setBusinessID(e.target.value)}
+        onChange={(e) => setAbn(e.target.value)}
       />
       {/* <TextField
           variant="outlined"
