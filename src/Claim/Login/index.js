@@ -57,11 +57,13 @@ export default function ClaimLogin(props) {
     const data = { businessId, secretKey }
     try {
       const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
-
+      const { claimId } = response.data
       if (response.status !== 200)
         console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
       else {
-        console.log("Authenticated, here's your data: ", response.data);
+        const getFiles = await axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { claimId } })
+        const files = getFiles.data
+        console.log("Authenticated, here's your data: ", response.data, files);
         setClaimData(response.data)
       }
     }
