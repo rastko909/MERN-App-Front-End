@@ -1,70 +1,93 @@
 import React, { useEffect } from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     width: '100%',
-//     marginTop: theme.spacing(3),
-//     overflowX: 'auto',
-//   },
-//   table: {
-//     minWidth: 650,
-//   },
-// }));
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 650,
+  },
+}));
 
-// const handleClick = (e, id) => {
-//   e.stopPropagation();
-//   alert("Hey, you just clicked " + id);
-// }
+const handleClick = (e, id, functions, type) => {
+  e.stopPropagation();
+  console.log("Businesses handleClick:", id);
+  functions.setView({ name: 'viewbusiness', id: id, data: undefined })
+}
 
-// const createData = (id, name, businessId, status, date, priority) => {
-//   return {id, name, businessId, status, date, priority };
-// }
+const rows = [];
 
-// const rows = [];
-  
-// const getClaims = async (functions) => {
-//   try {
-//     const claims = await axios.get(process.env.REACT_APP_API_URL + '/admin/dashboard');
-//     let businessName = undefined;
-    
-//     for(let claim of claims.data) {
-//       const businessId = claim.businessId;
+const createBusinessRow = (id, name, abn, claims) => {
+  return { id, name, abn, claims };
+}
 
-//       try {
-//         const business = await axios.get(process.env.REACT_APP_API_URL + '/business/find', {headers: {id: businessId}})
-//         console.log("Here's the business name:", business.data);
-//         businessName = business.data.name;
-//       } catch (error) {
-//         console.log(error.message);
-//       } finally {
-//         rows.push(createData(claim.id, businessName, claim.businessId, functions.convertStatus(claim.status), claim.timestamps.createdAt, functions.convertPriority(claim.priority)));
-//       }
-//     }
-
-//   } catch (error) {
-//     console.log("An exception was caught:", error);
-//   } finally {
-//     functions.setStateFromChild("claimData", rows);
-//     // functions.setView("claims");
-//   }
-// }
+const getBusinesses = async (functions) => {
+  try {
+    let allBusinesses = await axios.get(process.env.REACT_APP_API_URL + '/business/all');
+    const businessObject = await Object.assign({}, allBusinesses.data.businessArray);
+    if (businessObject) {
+      Object.values(businessObject).map((business) => {
+        let bus = business.business;
+        let claims = business.claimsCount;
+        return rows.push(createBusinessRow(bus.id, bus.name, bus.abn, claims));
+      })
+    }
+  }
+  catch (error) {
+    console.log('Error retrieving businesses: ', error.message);
+  }
+  finally {
+    functions.setView({name: "businesses", id: undefined, data: rows});
+  }
+}
 
 
 export default function BusinessesList({ functions }) {
-  // const classes = useStyles();
-  
+  const classes = useStyles();
+
   useEffect(() => {
-    // if (rows.length < 1)
-      // getClaims(functions);
-  }, []) 
+    if (rows.length < 1)
+    getBusinesses(functions);
+  }, [functions]);
 
   return (
     <>
-      <h1>Hello from the business view!</h1>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Business ID</TableCell>
+              <TableCell align="right">Business Name</TableCell>
+              <TableCell align="right">Business ABN</TableCell>
+              <TableCell align="right">No. Of Claims</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
+                <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
+                <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
+                <TableCell align="right">
+                  <span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'monospaced link-hover'}>{row.abn}</span>
+                </TableCell>
+                <TableCell align="right">{row.claims}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
     </>
   );
 }

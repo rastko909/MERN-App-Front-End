@@ -12,15 +12,14 @@ export default class Dashboard extends React.Component {
 
   state = {
     view: {
-      name: 'claims',
+      name: 'openclaims',
       id: undefined,
       data: undefined, 
     },
   };
 
   setView = (viewObject) => {
-    console.log("Setting the view: (name/id/data)", viewObject.name, viewObject.id, viewObject.data);
-
+    
     this.setState({
       view: {
         name: viewObject.name || undefined,
@@ -31,7 +30,7 @@ export default class Dashboard extends React.Component {
   }
 
   convertStatus = (number) => {
-    const statuses = ["new", "open", "pending", "closed"];
+    const statuses = ["New", "Open", "Pending", "Closed"];
 
     if (number > (statuses.length - 1))
       return statuses[0];

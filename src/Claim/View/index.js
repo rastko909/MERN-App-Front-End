@@ -20,6 +20,17 @@ const useStyles = makeStyles(theme => ({
 export default function ViewClaim(props) {
   const classes = useStyles();
   const { claimBusId, timestamps, status, categories, details, questions } = props.data
+
+
+  const convertStatus = (number) => {
+    const statuses = ["New", "Open", "Pending", "Closed"];
+
+    if (number > (statuses.length - 1))
+      return statuses[0];
+    else
+      return statuses[number];
+  };
+
   return (
     <>
     <NavBar />
@@ -44,7 +55,7 @@ export default function ViewClaim(props) {
                 </TableRow>
                 <TableRow hover={true}>
                   <TableCell><strong>Status:</strong></TableCell>
-                  <TableCell><span className="status">{status}</span></TableCell>
+                  <TableCell><span className="status">{convertStatus(status)}</span></TableCell>
                 </TableRow>
                 <TableRow hover={true}>
                   <TableCell><strong>Categories: </strong> </TableCell>
