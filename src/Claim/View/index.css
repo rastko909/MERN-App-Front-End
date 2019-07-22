@@ -20,6 +20,11 @@
   margin-right: 0.5rem;
 }
 
+.category::before {
+  content: "\2715";
+  padding-right: 0.5rem;
+}
+
 .claim-heading-container {
   padding: 0.5rem 1rem;
   background: #F9DE48;
