@@ -35,7 +35,7 @@ const getOpenClaims = async (functions) => {
   const rows = [];
 
   try {
-    const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/all/find/open');
+    const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/find/open');
 
     for (let claim of claims.data)
       rows.push(createClaimRow(claim.id, claim.businessName, claim.businessId, functions.convertStatus(claim.status), claim.date, functions.convertPriority(claim.priority)));
