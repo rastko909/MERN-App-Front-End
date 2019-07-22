@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  title: {
+    flexGrow: 1,
+  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -54,7 +57,7 @@ const seedData = async (functions) => {
     const response = await axios.get(process.env.REACT_APP_API_URL + '/seed');
     console.log("Seed data response:", response);
 
-    setTimeout(() => {functions.setView({ name: "openclaims" })}, 1500);
+    setTimeout(() => {functions.setView({ name: "openclaims" })}, 5000);
     
   } catch(error) {
     console.log("Caught an error requesting data to be seeded:\n", error.message);
@@ -69,24 +72,13 @@ export default function NavBar({functions}) {
     <>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>Adminstration Dashboard</Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'Search' }}
-            />
-          </div>
-
+          <Typography variant="h6" className={classes.title} noWrap>
+          <i className="fas fa-hands-helping icon"></i>
+          Adminstration Dashboard</Typography>
           <Button color="inherit" onClick={() => functions.setView({ name: 'newbusiness' })}>Create Business</Button>
           <Button color="inherit" onClick={() => functions.setView({ name: 'newclaim' })}>Create Claim</Button>
           <Button color="inherit" onClick={() => seedData(functions)}><strong>DELETE AND SEED DATA</strong></Button>
+          <Button color="inherit" onClick={() => seedData(functions)}>Logout</Button>
         </Toolbar>
       </AppBar>
     </>
