@@ -44,7 +44,6 @@ export default function SignIn(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.value)
     adminLogin(form.email, form.password);
   }
 
@@ -120,6 +119,7 @@ export default function SignIn(props) {
             label="Remember me"
           />
           <Button
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
