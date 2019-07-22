@@ -218,7 +218,7 @@ export default function ViewClaim({ view, functions }) {
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
-
+    console.log('table panel props', props);
     return (
       <Typography
         component="div"
@@ -262,7 +262,9 @@ export default function ViewClaim({ view, functions }) {
       <>
         <h3>Comments</h3>
         {claim.comments.map((comment, index) => {
-          return <p key={index}>{comment.timestamp}: {comment.text}</p>
+          return (
+            <p key={index}>{comment.timestamp}: {comment.text}</p>
+          ) 
         })}
       </>
     );
@@ -279,11 +281,7 @@ export default function ViewClaim({ view, functions }) {
       <>
         <AppBar color="default" className={classes.adminBar} position="static">
           <Tabs value={value} onChange={handleChange} aria-label="Simple tabs example">
-            <Tab
-              indicatorColor="primary"
-              textColor="primary"
-              variant="fullWidth"
-              label="Claim " icon={<SubjectIcon />} {...a11yProps(0)} />
+            <Tab label="Claim " icon={<SubjectIcon />} {...a11yProps(0)} />
             <Tab label="Comments" icon={<MessageIcon />} {...a11yProps(1)} />
             <Tab label="Attachments" icon={<AttachmentIcon />} {...a11yProps(2)} />
             <Tab disabled={true} className={classes.tabSpacer} />
@@ -353,7 +351,6 @@ export default function ViewClaim({ view, functions }) {
                     <TableCell className={classes.bottom} >
 
                       {Object.values(claim.categories).map((category, index) => {
-                        console.log(category)
                         return (
                           <span key={index} className="category">{category.label}</span>
                         )
@@ -374,7 +371,7 @@ export default function ViewClaim({ view, functions }) {
                 <Typography className={classes.heading}>View Claim</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Typography>
+                <Typography component="div">
                   {Object.values(claim.details).map((answer, index) => {
                     return (
                       <div key={index} className="question-answer-container">
@@ -393,7 +390,10 @@ export default function ViewClaim({ view, functions }) {
 
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {claim.comments.length > 0 && renderComments(claim)}
+        <div className="comment-container">
+        {claim.comments.length > 0 && renderComments(claim)}
+        </div>
+
           <div id={'comments'} className='comments'>
             <div>Add Comment</div>
           </div>
@@ -406,7 +406,7 @@ export default function ViewClaim({ view, functions }) {
               rows={5} />}
             labelPlacement='top'
           />
-          <Button className="submit-btn" variant="contained" onClick={() => handleOpenConfirmComment(view, functions)} color="primary">Submit</Button>
+          <Button className="comment-submit-btn" variant="contained" onClick={() => handleOpenConfirmComment(view, functions)} color="primary">Submit</Button>
           <Dialog
             open={confirmComment}
             onClose={handleCloseConfirmComment}
