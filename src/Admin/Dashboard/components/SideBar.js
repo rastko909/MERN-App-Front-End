@@ -27,7 +27,7 @@ export default function SideBar({functions}) {
         <List>
           <ListItem button onClick={() => functions.setView({ name: 'openclaims' })}>
             <ListItemIcon><ViewListIcon /></ListItemIcon>
-            <ListItemText primary='Open Claims' />
+            <ListItemText primary='Claims' />
           </ListItem>
           <ListItem button onClick={() => functions.setView({ name: 'businesses' })}>
             <ListItemIcon><BallotIcon /></ListItemIcon>
