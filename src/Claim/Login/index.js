@@ -57,7 +57,6 @@ export default function ClaimLogin(props) {
     const data = { businessId, secretKey }
     try {
       const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
-      const { claimId } = response.data
       if (response.status !== 200)
         console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
       else {
