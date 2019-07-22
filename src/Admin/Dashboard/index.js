@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 // import CssBaseline from '@material-ui/core/CssBaseline';
 
 // import DashboardHome from './components/DashboardHome';
@@ -27,6 +28,11 @@ export default class Dashboard extends React.Component {
         data: viewObject.data || undefined,
       }
     })
+  }
+
+  getSignedUrl = async (url) => {
+    let signedUrl = await Axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
+    //this is where signed url should be assigned to the component to view the file
   }
 
   convertStatus = (number) => {
