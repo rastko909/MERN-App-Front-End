@@ -1,13 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-// import CssBaseline from '@material-ui/core/CssBaseline';
-
-// import DashboardHome from './components/DashboardHome';
-// import Navbar from './components/Navbar';
-// import Sidebar from './components/Sidebar';
-
 import Home from './components/Home';
-// import './index.css';
 
 export default class Dashboard extends React.Component {
 

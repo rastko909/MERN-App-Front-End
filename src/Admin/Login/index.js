@@ -58,16 +58,16 @@ export default function SignIn(props) {
     const data = { email, password }
     let response;
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data);
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, {withCredentials: true});
     }
     catch (error) {
-      console.log('Error in catch: ', error.message);
+      console.log('Error in catch: ', error);
     }
 
     if (!response || response.status !== 200) {
       alert('Unauthorized.')
     } else if (response.status === 200) {
-      props.history.push('/admin/dashboard');
+      props.history.push('/admin/dashboard/');
     }
   }
 
@@ -89,7 +89,8 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Admin Portal
         </Typography>
-        <form className={classes.form} noValidate>
+        {/* <form className={classes.form} method="post" noValidate> */}
+        <div className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -140,7 +141,7 @@ export default function SignIn(props) {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </div>
       </div>
     </Container>
   )

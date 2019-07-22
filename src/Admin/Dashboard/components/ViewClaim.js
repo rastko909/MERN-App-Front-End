@@ -80,9 +80,9 @@ const addComment = async (view, comment, functions) => {
 }
 
 export default function ViewClaim({ view, functions }) {
-  const classes = useStyles();
-  const [priority, setPriority] = React.useState('');
-  const [status, setStatus] = React.useState('');
+  const classes = useStyles(); // eslint-disable-next-line
+  const [priority, setPriority] = React.useState(''); // eslint-disable-next-line
+  const [status, setStatus] = React.useState(''); 
   const [openPriority, setOpenPriority] = React.useState(false);
   const [openStatus, setOpenStatus] = React.useState(false);
   const [comment, setComment] = React.useState('');
