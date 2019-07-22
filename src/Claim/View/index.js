@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import NavBar from '../../Home/components/NavBar';
 import './index.css'
+import Axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +31,11 @@ export default function ViewClaim(props) {
     else
       return statuses[number];
   };
+
+  const getSignedUrl = async (url) => {
+    let signedUrl = await Axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
+    //this is where signed url should be assigned to the component to view the file
+  }
 
   return (
     <>
