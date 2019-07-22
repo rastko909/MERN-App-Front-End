@@ -30,11 +30,6 @@ export default class Dashboard extends React.Component {
     })
   }
 
-  getSignedUrl = async (url) => {
-    let signedUrl = await Axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
-    //this is where signed url should be assigned to the component to view the file
-  }
-
   convertStatus = (number) => {
     const statuses = ["New", "Open", "Pending", "Closed"];
 

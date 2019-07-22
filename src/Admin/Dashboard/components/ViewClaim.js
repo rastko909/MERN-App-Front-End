@@ -32,6 +32,9 @@ const getClaimData = async (functions, view) => {
     console.log("Here's the claim data response", claim.data);
     claim.data.comments = claim.data.comments.reverse();
     functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
+    console.log('claim.data.attachments:', claim.data.attachments )
+    getSignedUrls(claim.data.attachments, functions)
+
   } catch (error) {
     console.log("Caught an error requesting data:\n", error.message);
   }
@@ -68,6 +71,31 @@ const addComment = async (view, comment, functions) => {
   }
 }
 
+const getSignedUrls = async (attachments, functions) => {
+  
+  let signedUrls = [];
+  try { 
+    for (let url of attachments) {
+      console.log(url)
+      let signed = await axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
+      if (signed) {
+        signedUrls.push(signed)
+        console.log('signed:',signed, 'signedUrls', signedUrls)
+      }
+    } 
+    // // signedUrls = await attachments.map(url => {
+    //   // console.log('url:',url)
+    //   // return axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
+    // })
+    if (signedUrls) {
+      console.log(signedUrls) 
+    }
+  } catch (error) {
+    console.log("Caught an error requesting data:\n", error.message);
+  }
+  
+}
+
 export default function ViewClaim({ view, functions }) {
   const classes = useStyles();
   const [priority, setPriority] = React.useState('');
@@ -76,6 +104,7 @@ export default function ViewClaim({ view, functions }) {
   const [openStatus, setOpenStatus] = React.useState(false);
   const [comment, setComment] = React.useState('');
   const [confirmComment, setConfirmComment] = React.useState(false);
+  const [attachments, setAttachments] = React.useState('');
 
   function handlePriorityChange(event) {
     view.data.priority = event.target.value;
