@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, LinearProgress } from '@material-ui/core/';
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -27,13 +22,13 @@ const handleClick = (e, id, functions, type) => {
   functions.setView({ name: 'viewbusiness', id: id, data: undefined })
 }
 
-const rows = [];
-
 const createBusinessRow = (id, name, abn, claims) => {
   return { id, name, abn, claims };
 }
 
 const getBusinesses = async (functions) => {
+  const rows = [];
+
   try {
     let allBusinesses = await axios.get(process.env.REACT_APP_API_URL + '/business/all');
     const businessObject = await Object.assign({}, allBusinesses.data.businessArray);
@@ -54,13 +49,16 @@ const getBusinesses = async (functions) => {
 }
 
 
-export default function BusinessesList({ functions }) {
+export default function BusinessesList({ view, functions }) {
   const classes = useStyles();
 
   useEffect(() => {
-    if (rows.length < 1)
+    if (!view.data)
     getBusinesses(functions);
-  }, [functions]);
+  }, [view, functions]);
+
+  if (!view.data)
+    return <LinearProgress />
 
   return (
     <>
@@ -75,7 +73,7 @@ export default function BusinessesList({ functions }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {view.data.map((row, index) => (
               <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
                 <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
                 <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
