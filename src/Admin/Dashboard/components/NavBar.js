@@ -60,9 +60,8 @@ export default function NavBar({functions}) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title} noWrap>
-          <i className="fas fa-hands-helping icon"></i>Adminstration Dashboard</Typography>
-          <Button color="inherit" onClick={() => functions.setView({ name: 'newbusiness' })}>Create Business</Button>
-          <Button color="inherit" onClick={() => functions.setView({ name: 'newclaim' })}>Create Claim</Button>
+          <i className="fas fa-hands-helping icon"></i>
+          Adminstration Dashboard </Typography>
           <Button color="inherit" onClick={() => seedData(functions)}><strong>DELETE AND SEED DATA</strong></Button>
           <Button color="inherit" onClick={() => logout(functions)}>Logout</Button>
         </Toolbar>

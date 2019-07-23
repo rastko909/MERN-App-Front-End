@@ -263,6 +263,13 @@ export default function ViewClaim({ view, functions }) {
 
 
   function renderComments(claim) {
+    if (claim.comments <= 0) {
+      return (
+        <>
+        <p>There are currently no comments on this claim.</p>
+        </>
+      )
+    }
     return (
       <>
         {claim.comments.map((comment, index) => {
@@ -402,7 +409,7 @@ export default function ViewClaim({ view, functions }) {
 
         <TabPanel value={value} index={1}>
           <Paper className={classes.comments}>
-            {claim.comments.length > 0 && renderComments(claim)}
+            {renderComments(claim)}
             <FormControlLabel
               className='answer'
               control={<TextareaAutosize
