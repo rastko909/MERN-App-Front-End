@@ -13,7 +13,6 @@ export default class Dashboard extends React.Component {
   };
 
   setView = (viewObject) => {
-    
     this.setState({
       view: {
         name: viewObject.name || undefined,

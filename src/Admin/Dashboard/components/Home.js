@@ -33,7 +33,7 @@ export default function Home({view, functions}) {
     <div className={classes.root}>
       <CssBaseline />
       <NavBar functions={functions} />
-      <SideBar functions={functions} />
+      <SideBar view={view} functions={functions} />
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
