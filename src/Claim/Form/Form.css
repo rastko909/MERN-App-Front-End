@@ -8,7 +8,6 @@
 }
 
 .dropzone-container {
-  /* border: 1px solid red; */
   width: 80%;
   padding: 1rem;
 }
@@ -19,26 +18,21 @@
   justify-content: center;
   align-items: center;
   width: 100% !important;
-  /* border: 1px solid purple !important; */
 }
 
 .business-id-container {
   width: 80%;
   padding: 1rem;
-  /* border: 1px solid red; */
 }
 
 .claim-heading {
   font-size: 1rem;
   font-weight: bolder;
-  /* padding: 0.5rem; */
   margin: 0;
   width: 80%;
-  /* background: #135E89; */
   border-bottom: 1px solid black;
   color: black;
   padding: 0.5rem;
-  /* border-radius: 0.25rem; */
 }
 
 .categories {
@@ -84,17 +78,18 @@
 
 .question {
   font-size: 1rem;
-  font-weight: bold;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .question-mark {
+  font-size: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background: #135E89;
   border-radius: 50%;
   color: white;
@@ -108,7 +103,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
 }
 
 .button-row {
@@ -117,11 +111,9 @@
   justify-content: space-around;
   width: 80%;
   padding: 1rem;
-  /* border: 1px solid black; */
 }
 
 .category-text {
-  /* font-style: italic; */
   width: 80%;
 }
 

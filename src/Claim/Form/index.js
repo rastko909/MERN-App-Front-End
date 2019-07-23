@@ -5,6 +5,9 @@ import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone';
 import NavBar from '../../Home/components/NavBar';
 import Question from './components/Question';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 
 axios.defaults.withCredentials = true;
 
@@ -44,8 +47,9 @@ class Form extends React.Component {
       questions: questions,
       answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
       categories: {},
+      priority: 0,
     },
-    
+
   }
 
   handleSubmit = async (event) => {
@@ -67,6 +71,7 @@ class Form extends React.Component {
   }
 
   sendAnswers = async () => {
+    console.log(this.state.newClaim)
     const response = await axios.post(process.env.REACT_APP_API_URL + "/claim/new", this.state.newClaim);
     let claimId = response.data.claimId;
     const { business_id } = this.state.newClaim;
@@ -85,11 +90,11 @@ class Form extends React.Component {
       await this.uploadImages(claimId, business_id, formData)
       console.log(`{ RENDER 'Secret key with disclaimer': ${response.data.secretKey}`);
     }
-      
+
   }
-  
+
   uploadImages = async (claimId, businessId, formData) => {
-    const response = await axios.post(process.env.REACT_APP_API_URL + "/upload", formData, {headers: { claimId, businessId  }})
+    const response = await axios.post(process.env.REACT_APP_API_URL + "/upload", formData, { headers: { claimId, businessId } })
     if (response.status !== 200)
       console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
     else
@@ -98,16 +103,16 @@ class Form extends React.Component {
 
   handleBusinessID = (event) => {
     let newState = this.state;
-    newState.newClaim[event.target.id] = event.target.value
-    this.setState(newState)
+    newState.newClaim[event.target.id] = event.target.value;
+    this.setState(newState);
   }
 
   handleUpload(files) {
-    let newState = this.state
-    newState.files = files
-    console.log('check state:', newState)
+    let newState = this.state;
+    newState.files = files;
+    console.log('check state:', newState);
     this.setState(newState);
-    };
+  };
 
   handleChange = (event) => {
     if (event.target.type === "checkbox") {
@@ -246,8 +251,8 @@ class Form extends React.Component {
             </div>
 
           </div>
-
         </FormGroup>
+
       </>
     )
   }
