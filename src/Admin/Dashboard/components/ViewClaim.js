@@ -102,7 +102,8 @@ const getClaimData = async (functions, view) => {
     let claim = await axios.get(process.env.REACT_APP_API_URL + '/claim/find', { headers: { id: claimId } });
     console.log("Here's the claim data response", claim.data);
     claim.data.comments = claim.data.comments.reverse();
-    getSignedUrls(claim.data.attachments, functions)
+    claim.data.signedAttachments = await getSignedUrls(claim.data.attachments, functions)
+    console.log('claim data bru:', claim.data)
     functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
     console.log('claim.data.attachments:', claim.data.attachments)
   } catch (error) {
@@ -154,7 +155,7 @@ const getSignedUrls = async (attachments, functions) => {
       }
     }
     if (signedUrls) {
-      console.log(signedUrls)
+      return signedUrls;
     }
   } catch (error) {
     console.log("Caught an error requesting data:\n", error.message);
@@ -171,7 +172,7 @@ export default function ViewClaim({ view, functions }) {
   const [openStatus, setOpenStatus] = React.useState(false);
   const [comment, setComment] = React.useState('');
   const [confirmComment, setConfirmComment] = React.useState(false);
-  const [attachments, setAttachments] = React.useState([]);
+  // const [attachments, setAttachments] = React.useState([]);
 
   // tab stuff
   const [value, setValue] = React.useState(0);
@@ -266,7 +267,7 @@ export default function ViewClaim({ view, functions }) {
       <>
         {claim.comments.map((comment, index) => {
           return (
-            <Comment from={'Case Manager'} date={comment.timestamp} comment={comment.text} />
+            <Comment key={index} from={'Case Manager'} date={comment.timestamp} comment={comment.text} />
           )
         })}
       </>
@@ -277,9 +278,11 @@ export default function ViewClaim({ view, functions }) {
     if (!view.data) {
       return null;
     }
-
     const claim = view.data;
     const questions = view.data.questions;
+    const attachments = view.data.signedAttachments;
+
+    console.log('signed attachments: ', attachments)
 
     return (
       <>
@@ -436,7 +439,20 @@ export default function ViewClaim({ view, functions }) {
           </Dialog>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          ATTACHMENTS GO HERE
+          <Paper className={classes.comments}>
+                {Object.values(attachments).map((attachment, index) => {
+                  return (
+                    <>
+                    <br />
+                    <strong>ATTACHMENT {index}:</strong>
+                    <br />
+                    {attachment.data} 
+                    <br />
+                    <br />
+                    </>
+                  )
+                })}
+          </Paper>
         </TabPanel>
 
       </>
