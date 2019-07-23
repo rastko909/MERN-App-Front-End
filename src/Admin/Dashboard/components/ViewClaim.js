@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+// Material UI depdencies 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -18,6 +19,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
 
+// Material UI icons
 import SubjectIcon from '@material-ui/icons/Subject';
 import MessageIcon from '@material-ui/icons/Message';
 import AttachmentIcon from '@material-ui/icons/Attachment';
@@ -31,13 +33,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './ViewClaim.css';
 
 
-// Confirm Comment Dialog Box
+// Confirm comment dialog box
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-
+// Styling for Material UI
 const useStyles = makeStyles(theme => ({
   button: {
     display: 'block',
@@ -91,10 +93,9 @@ const getClaimData = async (functions, view) => {
     let claim = await axios.get(process.env.REACT_APP_API_URL + '/claim/find', { headers: { id: claimId } });
     console.log("Here's the claim data response", claim.data);
     claim.data.comments = claim.data.comments.reverse();
-    functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
-    console.log('claim.data.attachments:', claim.data.attachments )
     getSignedUrls(claim.data.attachments, functions)
-
+    functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
+    console.log('claim.data.attachments:', claim.data.attachments)
   } catch (error) {
     console.log("Caught an error requesting data:\n", error.message);
   }
@@ -132,36 +133,31 @@ const addComment = async (view, comment, functions) => {
 }
 
 const getSignedUrls = async (attachments, functions) => {
-  
+
   let signedUrls = [];
-  try { 
+  try {
     for (let url of attachments) {
       console.log(url)
       let signed = await axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
       if (signed) {
         signedUrls.push(signed)
-        console.log('signed:',signed, 'signedUrls', signedUrls)
+        console.log('signed:', signed, 'signedUrls', signedUrls)
       }
-    } 
-    // // signedUrls = await attachments.map(url => {
-    //   // console.log('url:',url)
-    //   // return axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
-    // })
+    }
     if (signedUrls) {
-      console.log(signedUrls) 
+      console.log(signedUrls)
     }
   } catch (error) {
     console.log("Caught an error requesting data:\n", error.message);
   }
-  
+
 }
 
 export default function ViewClaim({ view, functions }) {
 
-  const theme = useTheme();
-  const classes = useStyles(); // eslint-disable-next-line
-  const [priority, setPriority] = React.useState(''); // eslint-disable-next-line
-  const [status, setStatus] = React.useState(''); 
+  const classes = useStyles();
+  const [priority, setPriority] = React.useState('');
+  const [status, setStatus] = React.useState('');
   const [openPriority, setOpenPriority] = React.useState(false);
   const [openStatus, setOpenStatus] = React.useState(false);
   const [comment, setComment] = React.useState('');
@@ -170,6 +166,9 @@ export default function ViewClaim({ view, functions }) {
 
   // tab stuff
   const [value, setValue] = React.useState(0);
+
+  // reference our comment input without messing with the state or render 
+  const commentInput = React.createRef();
 
   function handlePriorityChange(event) {
     view.data.priority = event.target.value;
@@ -185,11 +184,8 @@ export default function ViewClaim({ view, functions }) {
     setOpenPriority(true);
   }
 
-  function handleCommentUpdate(event) {
-    setComment(event.target.value);
-  }
-
   function handleOpenConfirmComment() {
+    setComment(commentInput.current.value);
     setConfirmComment(true);
   }
 
@@ -199,7 +195,7 @@ export default function ViewClaim({ view, functions }) {
 
   function handleAcceptCommentConfirm() {
     addComment(view, comment, functions)
-    setConfirmComment(false);
+    setConfirmComment(false)
   }
 
   function handleStatusChange(event) {
@@ -216,9 +212,12 @@ export default function ViewClaim({ view, functions }) {
     setOpenStatus(true);
   }
 
+  function handleChange(event, newValue) {
+    setValue(newValue);
+  }
+
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
-    console.log('table panel props', props);
     return (
       <Typography
         component="div"
@@ -246,14 +245,10 @@ export default function ViewClaim({ view, functions }) {
     };
   }
 
-  function handleChange(event, newValue) {
-    setValue(newValue);
-  }
-
+  // Hook useEffect provides state within this component - following Material UI convention
   useEffect(() => {
     if (!view.data)
       getClaimData(functions, view);
-
   }, [functions, view])
 
 
@@ -262,17 +257,19 @@ export default function ViewClaim({ view, functions }) {
       <>
         <h3>Comments</h3>
         {claim.comments.map((comment, index) => {
+          const date = new Date(comment.timestamp)
           return (
-            <p key={index}>{comment.timestamp}: {comment.text}</p>
-          ) 
+            <p key={index}>{date.toUTCString()} {comment.text}</p>
+          )
         })}
       </>
     );
   }
 
   const renderClaimData = (props) => {
-    if (!view.data)
+    if (!view.data) {
       return null;
+    }
 
     const claim = view.data;
     const questions = view.data.questions;
@@ -286,7 +283,9 @@ export default function ViewClaim({ view, functions }) {
             <Tab label="Attachments" icon={<AttachmentIcon />} {...a11yProps(2)} />
             <Tab disabled={true} className={classes.tabSpacer} />
           </Tabs>
+
           <div className="claim-options">
+
             <form autoComplete="off">
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="status-select">Priority</InputLabel>
@@ -307,6 +306,7 @@ export default function ViewClaim({ view, functions }) {
                 </Select>
               </FormControl>
             </form>
+
             <form autoComplete="off">
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="status-select">Status</InputLabel>
@@ -329,6 +329,7 @@ export default function ViewClaim({ view, functions }) {
             </form>
           </div>
         </AppBar>
+
         <TabPanel value={value} index={0}>
           <Paper className={classes.root}>
             <div className="table">
@@ -359,48 +360,45 @@ export default function ViewClaim({ view, functions }) {
                   </TableRow>
                 </TableBody>
               </Table>
-              
+
             </div>
-            </Paper>
-            <ExpansionPanel className={classes.claimExpand}>
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={classes.heading}>View Claim</Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <Typography component="div">
-                  {Object.values(claim.details).map((answer, index) => {
-                    return (
-                      <div key={index} className="question-answer-container">
-                        <div key={index} className="question">
-                          <Typography component="p" key={index}><strong>Q{index + 1}: {questions[index]}</strong></Typography>
-                        </div>
-                        <div className="answer">
-                          <Typography component="p" key={index}>{answer}</Typography>
-                        </div>
+          </Paper>
+          <ExpansionPanel className={classes.claimExpand}>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>View Claim</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography component="div">
+                {Object.values(claim.details).map((answer, index) => {
+                  return (
+                    <div key={index} className="question-answer-container">
+                      <div key={index} className="question">
+                        <Typography component="p" key={index}><strong>Q{index + 1}: {questions[index]}</strong></Typography>
                       </div>
-                    )
-                  })}
-                </Typography>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-
+                      <div className="answer">
+                        <Typography component="p" key={index}>{answer}</Typography>
+                      </div>
+                    </div>
+                  )
+                })}
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </TabPanel>
-        <TabPanel value={value} index={1}>
-        <div className="comment-container">
-        {claim.comments.length > 0 && renderComments(claim)}
-        </div>
 
-          <div id={'comments'} className='comments'>
-            <div>Add Comment</div>
+        <TabPanel value={value} index={1}>
+          <div className="comment-container">
+            {claim.comments.length > 0 && renderComments(claim)}
           </div>
-          <FormControlLabel className='answer'
+          <FormControlLabel
+            className='answer'
             control={<TextareaAutosize
-              onChange={handleCommentUpdate}
-              id={'addComment'} // + props.index}
+              ref={commentInput}
+              id={'addComment'}
               className='answer'
               aria-label="Minimum height"
               rows={5} />}
@@ -432,6 +430,7 @@ export default function ViewClaim({ view, functions }) {
         <TabPanel value={value} index={2}>
           ATTACHMENTS GO HERE
         </TabPanel>
+
       </>
     );
   }
