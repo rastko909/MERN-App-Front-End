@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import { Redirect } from 'react-router-dom';
+
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Toolbar, Typography, /*InputBase*/ } from '@material-ui/core/';
 // import SearchIcon from '@material-ui/icons/Search';
@@ -70,6 +72,8 @@ const logout = async () => {
     console.log("Here's the logout response:", response.data);
   } catch(error) {
     console.log("Caught an error logging out:\n", error.message);
+  } finally {
+    return <Redirect to='/' />
   }
 }
 
@@ -87,7 +91,7 @@ export default function NavBar({functions}) {
           <Button color="inherit" onClick={() => functions.setView({ name: 'newbusiness' })}>Create Business</Button>
           <Button color="inherit" onClick={() => functions.setView({ name: 'newclaim' })}>Create Claim</Button>
           <Button color="inherit" onClick={() => seedData(functions)}><strong>DELETE AND SEED DATA</strong></Button>
-          <Button color="inherit" onClick={logout}>Logout</Button>
+          <Button color="inherit" onClick={async() => {logout()}}>Logout</Button>
         </Toolbar>
       </AppBar>
     </>

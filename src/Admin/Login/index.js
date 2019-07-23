@@ -58,7 +58,7 @@ export default function SignIn(props) {
     const data = { email, password }
     let response;
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, {crossDomain: true, withCredentials: true});
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data);
     }
     catch (error) {
       console.log('Error in catch: ', error);
@@ -90,7 +90,7 @@ export default function SignIn(props) {
           Admin Portal
         </Typography>
         {/* <form className={classes.form} method="post" noValidate> */}
-        <div className={classes.form}>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -141,7 +141,7 @@ export default function SignIn(props) {
               </Link>
             </Grid>
           </Grid>
-        </div>
+        </form>
       </div>
     </Container>
   )
