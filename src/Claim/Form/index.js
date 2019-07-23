@@ -102,9 +102,10 @@ class Form extends React.Component {
     this.setState(newState)
   }
 
-  handleUpload(files){
+  handleUpload(files) {
     let newState = this.state
     newState.files = files
+    console.log('check state:', newState)
     this.setState(newState);
     };
 
