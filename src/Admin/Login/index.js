@@ -58,7 +58,7 @@ export default function SignIn(props) {
     const data = { email, password }
     let response;
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, {crossDomain: true, 'Content-Type': 'application/json', withCredentials: true});
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, {crossDomain: true, withCredentials: true});
     }
     catch (error) {
       console.log('Error in catch: ', error);
