@@ -19,6 +19,8 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
 
+import Badge from '@material-ui/core/Badge';
+
 // Material UI icons
 import SubjectIcon from '@material-ui/icons/Subject';
 import MessageIcon from '@material-ui/icons/Message';
@@ -32,10 +34,14 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // Import styles
 import './ViewClaim.css';
 
+// Components 
+import Comment from './Comment';
+
 
 // Confirm comment dialog box
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
 
+// Axios
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -52,6 +58,9 @@ const useStyles = makeStyles(theme => ({
   },
   label: {
     color: 'white',
+  },
+  comments: {
+    padding: '1rem',
   },
   options: {
     display: 'flex',
@@ -162,7 +171,7 @@ export default function ViewClaim({ view, functions }) {
   const [openStatus, setOpenStatus] = React.useState(false);
   const [comment, setComment] = React.useState('');
   const [confirmComment, setConfirmComment] = React.useState(false);
-  const [attachments, setAttachments] = React.useState('');
+  const [attachments, setAttachments] = React.useState([]);
 
   // tab stuff
   const [value, setValue] = React.useState(0);
@@ -255,11 +264,9 @@ export default function ViewClaim({ view, functions }) {
   function renderComments(claim) {
     return (
       <>
-        <h3>Comments</h3>
         {claim.comments.map((comment, index) => {
-          const date = new Date(comment.timestamp)
           return (
-            <p key={index}>{date.toUTCString()} {comment.text}</p>
+            <Comment from={'Case Manager'} date={comment.timestamp} comment={comment.text} />
           )
         })}
       </>
@@ -391,20 +398,21 @@ export default function ViewClaim({ view, functions }) {
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          <div className="comment-container">
+          <Paper className={classes.comments}>
             {claim.comments.length > 0 && renderComments(claim)}
-          </div>
-          <FormControlLabel
-            className='answer'
-            control={<TextareaAutosize
-              ref={commentInput}
-              id={'addComment'}
+            <FormControlLabel
               className='answer'
-              aria-label="Minimum height"
-              rows={5} />}
-            labelPlacement='top'
-          />
-          <Button className="comment-submit-btn" variant="contained" onClick={() => handleOpenConfirmComment(view, functions)} color="primary">Submit</Button>
+              control={<TextareaAutosize
+                ref={commentInput}
+                id={'addComment'}
+                className='answer'
+                aria-label="Minimum height"
+                rows={5} />}
+              labelPlacement='top'
+            />
+            <Button className="comment-submit-btn" variant="contained" onClick={() => handleOpenConfirmComment(view, functions)} color="primary">Submit</Button>
+          </Paper>
+
           <Dialog
             open={confirmComment}
             onClose={handleCloseConfirmComment}
