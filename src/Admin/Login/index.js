@@ -58,7 +58,8 @@ export default function SignIn(props) {
     const data = { email, password }
     let response;
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data);
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, {withCredentials: true});
+      console.log("This is the adminLogin response:", response);
     }
     catch (error) {
       console.log('Error in catch: ', error);
@@ -77,6 +78,8 @@ export default function SignIn(props) {
   //     props.history.push('/admin/dashboard')
   //   }
   //  }, [])
+
+  console.log("I AM RIGHT BEFORE THE RENDER!!!!!!!");
 
   return (
     <Container component="main" maxWidth="xs">
