@@ -8,7 +8,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import ViewListIcon from '@material-ui/icons/ViewList';
 import BallotIcon from '@material-ui/icons/Ballot';
-import ArrowIcon from '@material-ui/icons/KeyboardArrowRight';
 
 const useStyles = makeStyles(theme => ({
   drawer: {

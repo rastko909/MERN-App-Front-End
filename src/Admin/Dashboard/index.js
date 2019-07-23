@@ -1,5 +1,4 @@
 import React from 'react';
-import Axios from 'axios';
 import Home from './components/Home';
 
 export default class Dashboard extends React.Component {
