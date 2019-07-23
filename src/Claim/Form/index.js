@@ -4,7 +4,7 @@ import { Button, Checkbox, FormControlLabel, FormGroup, OutlinedInput } from '@m
 import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone';
 import NavBar from '../../Home/components/NavBar';
-import Question from './components/Question/Question';
+import Question from './components/Question';
 
 axios.defaults.withCredentials = true;
 
@@ -42,7 +42,7 @@ class Form extends React.Component {
     newClaim: {
       business_id: "",
       questions: questions,
-      answers: {},
+      answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
       categories: {},
     },
     
@@ -102,9 +102,10 @@ class Form extends React.Component {
     this.setState(newState)
   }
 
-  handleUpload(files){
+  handleUpload(files) {
     let newState = this.state
     newState.files = files
+    console.log('check state:', newState)
     this.setState(newState);
     };
 
@@ -112,7 +113,6 @@ class Form extends React.Component {
     if (event.target.type === "checkbox") {
       let newState = this.state;
       if (newState.newClaim.categories[event.target.id]) {
-        console.log('first inner if')
         newState.newClaim.categories[event.target.id] = {
           checked: event.target.checked,
           label: event.target.value
@@ -215,12 +215,11 @@ class Form extends React.Component {
           </div>
           <div className="questions-container">
             <div className="claim-heading">Questions</div>
+
             {questions.map((question, index) => {
-              index++;
-              return (
-                <Question key={index} question={question} index={index} handleChange={this.handleChange} />
-              )
+              return <Question key={index} question={question} index={index + 1} handleChange={this.handleChange} />
             })}
+
             <div className="claim-heading">Attachments</div>
             <div className="dropzone-container">
               <p id="dropzone-description" className='question'>

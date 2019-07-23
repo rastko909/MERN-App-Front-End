@@ -59,6 +59,7 @@ export default function SignIn(props) {
     let response;
     try {
       response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, {withCredentials: true});
+      console.log("This is the adminLogin response:", response);
     }
     catch (error) {
       console.log('Error in catch: ', error);
@@ -78,6 +79,8 @@ export default function SignIn(props) {
   //   }
   //  }, [])
 
+  console.log("I AM RIGHT BEFORE THE RENDER!!!!!!!");
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -90,7 +93,7 @@ export default function SignIn(props) {
           Admin Portal
         </Typography>
         {/* <form className={classes.form} method="post" noValidate> */}
-        <div className={classes.form}>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -141,7 +144,7 @@ export default function SignIn(props) {
               </Link>
             </Grid>
           </Grid>
-        </div>
+        </form>
       </div>
     </Container>
   )

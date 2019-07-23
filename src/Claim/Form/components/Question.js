@@ -12,7 +12,7 @@ export default function Question(props) {
       </div>
       <FormControlLabel className='answer'
         control={<TextareaAutosize
-        onChange={props.handleChange}
+        onBlur={props.handleChange}
         id={'answer_' + props.index}
         className='answer'
         aria-label="Minimum height"

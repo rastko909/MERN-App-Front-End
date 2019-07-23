@@ -1,5 +1,6 @@
 import React from 'react';
 import Home from './components/Home';
+import { Redirect } from 'react-router-dom';
 
 export default class Dashboard extends React.Component {
 
@@ -54,8 +55,13 @@ export default class Dashboard extends React.Component {
   }
 
   render = () => {
+    const { view } = this.state;
+
+    if (view.name === "logout")
+      return <Redirect to="/" />
+
     return (
-      <Home view={this.state.view} functions={this.usableFunctions()} />
+      <Home view={view} functions={this.usableFunctions()} />
     );
   }
 }
