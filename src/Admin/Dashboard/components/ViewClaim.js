@@ -166,7 +166,7 @@ export default function ViewClaim({ view, functions }) {
   const [openStatus, setOpenStatus] = React.useState(false);
   const [comment, setComment] = React.useState('');
   const [confirmComment, setConfirmComment] = React.useState(false);
-  const [attachments, setAttachments] = React.useState('');
+  const [attachments, setAttachments] = React.useState([]);
 
   // tab stuff
   const [value, setValue] = React.useState(0);
