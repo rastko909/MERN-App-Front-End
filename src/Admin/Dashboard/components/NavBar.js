@@ -59,7 +59,7 @@ export default function NavBar({functions}) {
         <Toolbar>
           <Typography variant="h6" className={classes.title} noWrap>
           <i className="fas fa-hands-helping icon"></i>
-          Adminstration Dashboard</Typography>
+          Adminstration Dashboard </Typography>
           <Button color="inherit" onClick={() => seedData(functions)}><strong>DELETE AND SEED DATA</strong></Button>
           <Button color="inherit" onClick={logout}>Logout</Button>
         </Toolbar>
