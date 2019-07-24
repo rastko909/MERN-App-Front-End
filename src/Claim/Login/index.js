@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-// import AlertDialog from '../Shared/Alert';
 import ViewClaim from '../View';
 import NavBar from '../../Home/components/NavBar';
 import './index.css'
@@ -78,9 +77,9 @@ export default function ClaimLogin(props) {
       <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+        {/* <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
-        </Avatar>
+        </Avatar> */}
         <Typography component="h1" variant="h5">
           Claims Portal
         </Typography>
@@ -129,7 +128,11 @@ export default function ClaimLogin(props) {
 
   return (
     <>
-      {claimData === null ? renderLogin() : <ViewClaim data={claimData} />}
+      {claimData === null ? renderLogin() : 
+      <>
+      <NavBar />
+      <ViewClaim data={claimData} />
+      </>}
     </>
   );
 }

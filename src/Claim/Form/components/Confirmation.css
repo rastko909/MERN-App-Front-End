@@ -39,7 +39,6 @@
 .login-details {
   margin-top: 1rem;
   width: 80%;
-  /* padding: 1rem; */
 }
 
 .login-row {
@@ -59,7 +58,6 @@
 }
 
 .login-value {
-  /* border: 1px solid red; */
   width: 100%;
   font-size: 1.3rem;
   font-weight: bold;
