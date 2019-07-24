@@ -1,9 +1,9 @@
 .status { 
   text-transform: capitalize;
-  border-radius: 0.25rem;
-  /* border: 1px solid red; */
   width: 100% !important;
   text-align: center;
+  background: #F5F5F5;
+  color: black;
   /* font-weight: bold; */
 }
 
@@ -12,27 +12,31 @@
 }
 
 .New {
-  background: #f44336;
+  /* background: #f44336; */
+  background: #FFEBEE;
+  border-left: 4px solid #f44336;
   padding: 0.25rem;
-  color: white;
+
 }
 
 .Open {
-  background: #03a9f4;
+  /* background: #03a9f4; */
+  background: #E1F5FE;
+  border-left: 4px solid #03A9F4;
   padding: 0.25rem;
-  color: white;
 }
 
 .Pending {
-  background: #4caf50;
+  /* background: #4caf50; */
+  background: #E8F5E9;
+  border-left: 4px solid #4caf50;
   padding: 0.25rem;
-  color: white;
 }
 
 .Closed {
-  background: #212121;
+  /* background: #212121; */
+  border-left: 4px solid #212121;
   padding: 0.25rem;
-  color: white;
 }
 
 .monospaced {

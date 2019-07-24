@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Container, Typography, makeStyles } from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
@@ -71,13 +71,13 @@ export default function SignIn(props) {
       props.history.push('/admin/dashboard/');
     }
   }
-
-  // review when i understand hookds better  
-  // useEffect(() => { 
-  //   if (document.cookie) {
-  //     props.history.push('/admin/dashboard')
-  //   }
-  //  }, [])
+  
+  // Redirect admin to dashboard if they are already logged in.
+  useEffect(() => { 
+    if (document.cookie) {
+      props.history.push('/admin/dashboard')
+    }
+   }, [props.history])
 
   console.log("I AM RIGHT BEFORE THE RENDER!!!!!!!");
 
