@@ -102,6 +102,7 @@ const getClaimData = async (functions, view) => {
     let claim = await axios.get(process.env.REACT_APP_API_URL + '/claim/find', { headers: { id: claimId } });
     claim.data.comments = claim.data.comments.reverse();
     claim.data.signedAttachments = await getSignedUrls(claim.data.attachments, functions)
+    console.log(claim.data)
     functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
   } catch (error) {
     console.log("Caught an error requesting data:\n", error.message);

@@ -14,7 +14,7 @@ const functions = () => {
   return {
     setView: this.setView,
     convertStatus: this.convertStatus,
-    convertPriority: this.convertPriority,
+    convertPriority: this.convertPriority
   };
 }
 
