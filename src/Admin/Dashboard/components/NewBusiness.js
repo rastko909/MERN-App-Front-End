@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Avatar, Button, CssBaseline, TextField, Container, Typography, makeStyles } from '@material-ui/core/';
+import { Avatar, Button, CssBaseline, TextField, Container, Typography, makeStyles, Paper } from '@material-ui/core/';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
+import { sizing } from '@material-ui/system';
+
+import './NewBusiness.css'
 
 axios.defaults.withCredentials = true;
 
@@ -12,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -57,6 +60,7 @@ export default function NewBusiness({ view, functions }) {
   }
 
   return (
+    <Paper className={'paper'}>
     <Container component="main" maxWidth="xs">
     <CssBaseline />
     <div className={classes.paper}>
@@ -91,18 +95,6 @@ export default function NewBusiness({ view, functions }) {
         autoComplete="business_abn"
         onChange={(e) => setAbn(e.target.value)}
       />
-      {/* <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="business_id"
-          label="Asssign Business ID"
-          name="business_id"
-          autoComplete="business_id"
-          autoFocus
-          onChange={(e) => setAbn(e.target.value)}
-        /> */}
         <Button
           type="submit"
           fullWidth
@@ -116,5 +108,6 @@ export default function NewBusiness({ view, functions }) {
       </form>
     </div>
   </Container>
+  </Paper>
   )
 }

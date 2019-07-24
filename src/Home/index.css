@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   height: calc(100vh - 64px);
-  background: #231F20 !important;
+  /* background: #231F20 !important; */
 }
 
 
@@ -64,14 +64,12 @@
 .buttons {
   width: 100% !important;
   height: 50% !important;
-  /* border: 1px solid purple; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   width: 80%;
   height: 80%;
-  /* border: 1px solid red; */
 }
 
 .button {
@@ -82,5 +80,4 @@
   color: black !important;
   width: 40%;
   margin: 1rem;
-  /* color: white !important; */
 }

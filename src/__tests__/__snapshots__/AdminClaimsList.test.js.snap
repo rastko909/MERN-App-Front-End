@@ -1,0 +1,450 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Admin Dashboard ClaimsList snapshot test testing Admin Dashboard ClaimsList 1`] = `
+<div
+  className="MuiPaper-root MuiPaper-elevation1 makeStyles-root-1 MuiPaper-rounded"
+>
+  <table
+    className="MuiTable-root makeStyles-table-2"
+  >
+    <thead
+      className="MuiTableHead-root"
+    >
+      <tr
+        className="MuiTableRow-root MuiTableRow-head"
+      >
+        <th
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-head"
+          scope="col"
+        >
+          Claim ID
+        </th>
+        <th
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight"
+          scope="col"
+        >
+          Business Name
+        </th>
+        <th
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight"
+          scope="col"
+        >
+          Business ID
+        </th>
+        <th
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter"
+          scope="col"
+        >
+          Status
+        </th>
+        <th
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter"
+          scope="col"
+        >
+          Lodgement Date
+        </th>
+        <th
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight"
+          scope="col"
+        >
+          Priority
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      className="MuiTableBody-root"
+    >
+      <tr
+        className="MuiTableRow-root table-row"
+        onClick={[Function]}
+      >
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            AF5LW6LX
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="link-hover"
+            onClick={[Function]}
+          >
+            Westpac
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            LJH567
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <div
+            className="status 0"
+          >
+            0
+          </div>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+        >
+          Tue Jul 23 2019 17:39:27 GMT+1000 (Australian Eastern Standard Time)
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="priority"
+          >
+            0
+          </span>
+        </td>
+      </tr>
+      <tr
+        className="MuiTableRow-root table-row"
+        onClick={[Function]}
+      >
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            9GF2LGE7
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="link-hover"
+            onClick={[Function]}
+          >
+            Westpac
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            LJH567
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <div
+            className="status 1"
+          >
+            1
+          </div>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+        >
+          Wed Jul 24 2019 11:36:04 GMT+1000 (Australian Eastern Standard Time)
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="priority"
+          >
+            1
+          </span>
+        </td>
+      </tr>
+      <tr
+        className="MuiTableRow-root table-row"
+        onClick={[Function]}
+      >
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            ND73W2P2
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="link-hover"
+            onClick={[Function]}
+          >
+            Coder Academy
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            WNC943
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <div
+            className="status 2"
+          >
+            2
+          </div>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+        >
+          Tue Jul 23 2019 17:38:48 GMT+1000 (Australian Eastern Standard Time)
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="priority"
+          >
+            2
+          </span>
+        </td>
+      </tr>
+      <tr
+        className="MuiTableRow-root table-row"
+        onClick={[Function]}
+      >
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            FCGGQGMN
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="link-hover"
+            onClick={[Function]}
+          >
+            Coder Academy
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            WNC943
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <div
+            className="status 3"
+          >
+            3
+          </div>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+        >
+          Tue Jul 23 2019 17:38:49 GMT+1000 (Australian Eastern Standard Time)
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="priority"
+          >
+            3
+          </span>
+        </td>
+      </tr>
+      <tr
+        className="MuiTableRow-root table-row"
+        onClick={[Function]}
+      >
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            X2V7V7JP
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="link-hover"
+            onClick={[Function]}
+          >
+            KPMG
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            TJY435
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <div
+            className="status 4"
+          >
+            4
+          </div>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+        >
+          Wed Jul 24 2019 11:36:04 GMT+1000 (Australian Eastern Standard Time)
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="priority"
+          >
+            4
+          </span>
+        </td>
+      </tr>
+      <tr
+        className="MuiTableRow-root table-row"
+        onClick={[Function]}
+      >
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            PZ2XPF3E
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="link-hover"
+            onClick={[Function]}
+          >
+            KPMG
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="monospaced link-hover"
+            onClick={[Function]}
+          >
+            TJY435
+          </span>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <div
+            className="status 1"
+          >
+            1
+          </div>
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+        >
+          Tue Jul 23 2019 17:39:27 GMT+1000 (Australian Eastern Standard Time)
+        </td>
+        <td
+          aria-sort={null}
+          className="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+        >
+          <span
+            className="priority"
+          >
+            2
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
