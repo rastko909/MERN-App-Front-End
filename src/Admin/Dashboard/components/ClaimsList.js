@@ -37,13 +37,14 @@ const getOpenClaims = async (functions) => {
   try {
     const claims = await axios.get(process.env.REACT_APP_API_URL + '/claim/find/open');
 
-    for (let claim of claims.data)
+    for (let claim of claims.data) {
       rows.push(createClaimRow(claim.id, claim.businessName, claim.businessId, functions.convertStatus(claim.status), claim.date, functions.convertPriority(claim.priority)));
+    }
 
   } catch (error) {
     console.log("An exception was caught:", error);
   } finally {
-    functions.setView({ name: "openclaims", id: undefined, data: rows });
+    functions.setView({ name: "openclaims", id: undefined, data: rows.reverse() });
   }
 }
 
@@ -53,7 +54,7 @@ export default function ClaimsList({ view, functions }) {
   useEffect(() => {
     if (!view.data)
       getOpenClaims(functions);
-  }, [view, functions]) 
+  }, [view, functions])
 
   if (!view.data)
     return (<LinearProgress />);

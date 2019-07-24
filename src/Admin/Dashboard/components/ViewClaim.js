@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 // Material UI depdencies 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -19,7 +19,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
 
-import Badge from '@material-ui/core/Badge';
+// import Badge from '@material-ui/core/Badge';
 
 // Material UI icons
 import SubjectIcon from '@material-ui/icons/Subject';
@@ -100,12 +100,9 @@ const getClaimData = async (functions, view) => {
   try {
     let claimId = view.id;
     let claim = await axios.get(process.env.REACT_APP_API_URL + '/claim/find', { headers: { id: claimId } });
-    console.log("Here's the claim data response", claim.data);
     claim.data.comments = claim.data.comments.reverse();
     claim.data.signedAttachments = await getSignedUrls(claim.data.attachments, functions)
-    console.log('claim data bru:', claim.data)
     functions.setView({ name: "viewclaim", id: claim.data.id, data: claim.data });
-    console.log('claim.data.attachments:', claim.data.attachments)
   } catch (error) {
     console.log("Caught an error requesting data:\n", error.message);
   }
@@ -114,8 +111,7 @@ const getClaimData = async (functions, view) => {
 const updatePriority = async (view) => {
   try {
     let claimId = view.id;
-    const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/update/priority', { id: claimId, priority: view.data.priority });
-    console.log("Axios updateprioty reponse", response);
+    await axios.post(process.env.REACT_APP_API_URL + '/claim/update/priority', { id: claimId, priority: view.data.priority });
   } catch (error) {
     console.log("Caught an error requesting data:\n", error.message);
   }

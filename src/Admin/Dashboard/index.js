@@ -58,7 +58,7 @@ export default class Dashboard extends React.Component {
     const { view } = this.state;
 
     if (view.name === "logout")
-      return <Redirect to="/" />
+      return <Redirect to="/admin/login" />
 
     return (
       <Home view={view} functions={this.usableFunctions()} />
