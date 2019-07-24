@@ -2,25 +2,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  /* border: 1px solid red; */
 }
 
 .comment-submit-btn {
   width: 100% !important;
 }
-
-.comment-container {
-  
-}
-
-/* .category-list {
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.category-list-item {
-  margin-right: 1rem;
-} */

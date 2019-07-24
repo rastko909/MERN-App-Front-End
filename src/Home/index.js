@@ -37,7 +37,7 @@ class Home extends React.Component {
               <Button className='button' onClick={this.newClaim}>
                 Lodge New Claim
               </Button>
-              <img className="image1" src={require('./images/new-claim.svg')} alt="logo" />
+              {/* <img className="image1" src={require('./images/new-claim.svg')} alt="logo" /> */}
 
             </div>
 
@@ -45,7 +45,7 @@ class Home extends React.Component {
               <Button className='button' onClick={this.viewClaim}>
                 Login to Existing Claim
               </Button>
-              <img className="image" src={require('./images/view-claim.svg')} alt="logo" />
+              {/* <img className="image" src={require('./images/view-claim.svg')} alt="logo" /> */}
 
             </div>
           </Paper>
