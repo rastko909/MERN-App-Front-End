@@ -7,13 +7,11 @@
 }
 
 .date {
-  /* border: 1px solid red; */
   font-size: 0.8rem;
 }
 
 .user {
   font-weight: bold;
-  /* padding-left: 0.5rem; */
 }
 
 .comment {
