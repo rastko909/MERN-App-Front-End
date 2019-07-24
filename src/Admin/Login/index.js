@@ -58,7 +58,7 @@ export default function SignIn(props) {
     const data = { email, password }
     let response;
     try {
-      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, {withCredentials: true});
+      response = await axios.post(process.env.REACT_APP_API_URL + '/admin/login', data, { withCredentials: true } );
       console.log("This is the adminLogin response:", response);
     }
     catch (error) {
@@ -71,7 +71,7 @@ export default function SignIn(props) {
       props.history.push('/admin/dashboard/');
     }
   }
-
+  
   // Redirect admin to dashboard if they are already logged in.
   useEffect(() => { 
     if (document.cookie) {
