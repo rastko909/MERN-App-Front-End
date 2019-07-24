@@ -30,8 +30,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar(props) {
+
   const classes = useStyles();
+
+  const handleOnClick = (event) => {
+    console.log(props)
+  }
 
   return (
     <div className={classes.root}>
@@ -45,6 +50,7 @@ export default function NavBar() {
           <i className="fas fa-hands-helping icon"></i>
             Disclosure Platform
           </Typography>
+          <Button onClick={handleOnClick} color="inherit">Home</Button>
           <Button color="inherit">About Us</Button>
           <Button color="inherit">Your Rights</Button>
           <Button color="inherit">FAQ</Button>
