@@ -6,15 +6,10 @@ import { DropzoneArea } from 'material-ui-dropzone';
 import NavBar from '../../Home/components/NavBar';
 import Question from './components/Question';
 import DisclosureLevel from './components/DisclosureLevel';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Confirmation from './components/Confirmation';
-import Notifier from '../../Shared/Alert';
+import Notifier  from '../../Shared/Notifier';
 
 axios.defaults.withCredentials = true;
-
-let exists = true;
 
 const questions = [
   'This is Question 1',
@@ -38,30 +33,45 @@ const questions = [
 
 class Form extends React.Component {
 
-  state = {
-    complete: false,
-    files: [],
-    pagination: {
-      page: {
-        currentPage: 0,
-        maxPage: 10
+  constructor(props) {
+    super();
+
+    console.log("Props from the Form Constructor:", props);
+
+    this.state = {
+      alert: {
+        notified: false,
+        ref: undefined,
       },
-    },
-    newClaim: {
-      disclosureLevel: "",
-      claimantDetails: {},
-      business_id: "",
-      questions: questions,
-      answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
-      categories: {},
-      priority: 0,
-      disclosureLevel: "",
-      claimantDetails: {},
-    },
-    confirmationData: {
-      secretKey: '',
-      businessId: '',
+      complete: false,
+      files: [],
+      pagination: {
+        page: {
+          currentPage: 0,
+          maxPage: 10
+        },
+      },
+      newClaim: {
+        business_id: "",
+        questions: questions,
+        answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
+        categories: {},
+        priority: 0,
+        disclosureLevel: "",
+        claimantDetails: {},
+      },
+      confirmationData: {
+        secretKey: '',
+        businessId: '',
+      },
+      refs: {
+        businessId: React.createRef(),
+      },
     }
+  }
+
+  handleDestroyNotifier = () => {
+    this.setState({ alert: { notified: false, ref: undefined }});
   }
 
   handleClaimantDetails = (event) => {
@@ -78,11 +88,14 @@ class Form extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    exists = await this.checkId();
-    this.setState({});
+    let exists = await this.checkId();
+
     if (exists) {
       this.sendAnswers();
     } else {
+      this.setState({ alert: { notified: true, ref: this.state.refs.businessId }})
+      this.state.refs.businessId.current.scrollIntoView({ behavior: 'smooth', block: 'start', });
+      this.state.refs.businessId.current.
       console.log(`{ RENDER ID NOT FOUND NOTIFICATION FOR ID: ${this.state.newClaim.business_id} }`);
     }
   }
@@ -117,7 +130,6 @@ class Form extends React.Component {
       await this.uploadImages(claimId, business_id, formData)
       this.state.confirmationData.secretKey = response.data.secretKey;
       this.state.confirmationData.businessId = business_id
-      console.log(`{ RENDER 'Secret key with disclaimer': ${response.data.secretKey}`);
       this.setState({ complete: true })
     }
   }
@@ -170,9 +182,10 @@ class Form extends React.Component {
   }
 
   render = () => {
-    console.log(exists)
+
+    const { alert } = this.state;
+
     if (this.state.complete === true) {
-      console.log('submitting... ', this.state)
       return (
         <>
           <NavBar />
@@ -180,19 +193,24 @@ class Form extends React.Component {
         </>
       )
     } else {
-
+      
       return (
         <>
           <NavBar />
-          {exists ? null : <Notifier message="Business ID is incorrect or does not exist" />}
+        
+          {/* <Notifier message="Business ID is incorrect or does not exist" variant="success" /> */}
+          {alert.notified && <Notifier destroy={this.handleDestroyNotifier} message="Business ID is incorrect or does not exist" variant="success" />}
+        
           <FormGroup className="form-container">
-            <div className="claim-heading">Business ID</div>
+            <div className="claim-heading" id="business-notifier" ref={this.state.refs.businessId}>Business ID</div>
             <div className="business-id-container">
+
               <FormControlLabel className='answer'
-                control={<OutlinedInput id="business_id"
+                control={<OutlinedInput
+                  id="business_id"
                   autoFocus={true}
                   fullWidth={true}
-                  onChange={this.handleBusinessID}
+                  onBlur={this.handleBusinessID}
                   placeholder='Please use the Business ID supplied by your company, or call our hotline for help.' />}
                 labelPlacement='top'
                 required={true}
