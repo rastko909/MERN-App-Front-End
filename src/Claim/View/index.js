@@ -34,7 +34,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
 
 import Comment from '../../Shared/Comment';
-
 // Import CSS
 import './index.css';
 
