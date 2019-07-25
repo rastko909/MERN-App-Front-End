@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core/';
@@ -8,6 +9,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import ViewListIcon from '@material-ui/icons/ViewList';
 import BallotIcon from '@material-ui/icons/Ballot';
+
+import ClaimLogin from '../../../Claim/Form';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -32,6 +35,7 @@ export default function SideBar({ view, functions }) {
 
   const [openClaim, setOpenClaim] = React.useState(true);
   const [openBusiness, setOpenBusiness] = React.useState(true);
+  const [redirect, setRedirect] = React.useState(false);
 
   function handleClaim() {
     setOpenClaim(!openClaim);
@@ -40,6 +44,15 @@ export default function SideBar({ view, functions }) {
   function handleBusiness() {
     setOpenBusiness(!openBusiness);
   }
+  
+  // return <Redirect to="/claim/new" render={(props) => (<ClaimLogin {...props} isAuthed={true} />)}/>
+
+  if (redirect)
+    return <Redirect to={{
+      pathname: "/claim/new",
+      search: "",
+      state: { isAuthed: true }
+    }} />
 
   return (
     <>
@@ -57,15 +70,13 @@ export default function SideBar({ view, functions }) {
                 <ListItemText disableTypography onClick={() => functions.setView({ name: 'openclaims' })} primary="View Claims" />
               </ListItem>
               <ListItem button className={classes.nested}>
-                <ListItemText disableTypography onClick={() => functions.setView({ name: 'newclaim' })}  primary="Create Claim" />
+                <ListItemText disableTypography onClick={() => setRedirect(true) /*functions.setView({ name: 'newclaim' })*/}  primary="Create Claim" />
               </ListItem>
             </List>
           </Collapse>
           <ListItem button onClick={handleBusiness}>
             <ListItemIcon><BallotIcon /></ListItemIcon>
-            <ListItemText primary='Businesses' />
-            {openBusiness ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
+            <ListItemText primary='Businesses' />{openBusiness ? <ExpandLess /> : <ExpandMore />}</ListItem>
           <Collapse in={openBusiness} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button className={classes.nested}>

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { withStyles } from '@material-ui/styles';
 import './Confirmation.css'
 import { Button, Checkbox, FormControlLabel, OutlinedInput } from '@material-ui/core/';
 
