@@ -10,7 +10,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Confirmation from './components/Confirmation';
-import Notifier  from '../../Shared/Alert';
+import Notifier from '../../Shared/Alert';
 
 axios.defaults.withCredentials = true;
 
@@ -168,7 +168,7 @@ class Form extends React.Component {
       return (
         <>
           <NavBar />
-          {exists ? null : <Notifier message="Business ID is incorrect or does not exist" />  }
+          {exists ? null : <Notifier message="Business ID is incorrect or does not exist" />}
           <FormGroup className="form-container">
             <div className="claim-heading">Business ID</div>
             <div className="business-id-container">
@@ -181,8 +181,14 @@ class Form extends React.Component {
                 labelPlacement='top'
                 required={true}
               />
-              
+
             </div>
+            <div className="claim-heading">Disclosure Level</div>
+            <div className="disclosure-container">
+              <DisclosureLevel />
+            </div>
+
+
             <div className="category-container">
               <div className="claim-heading">Categories</div>
               <p className="category-text">Please select any of the following categories that apply to your claim: </p>
