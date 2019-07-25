@@ -6,8 +6,8 @@ import ClaimForm from '../Claim/Form';
 import ClaimLogin from '../Claim/Login';
 import AdminLogin from '../Admin/Login';
 import AdminDashboard from '../Admin/Dashboard';
-// import NewBusiness from '../components/Admin/NewBusiness';
 import AdminPrivate from './AdminPrivate';
+import NotFound from '../Shared/NotFound'
 
 export default class Routes extends React.Component {
   render() {
@@ -19,7 +19,7 @@ export default class Routes extends React.Component {
           <Route exact path="/claim/new" component={ClaimForm} />
           <Route exact path="/admin/login" component={AdminLogin} /> 
           <AdminPrivate exact path="/admin/dashboard" component={AdminDashboard} />
-          {/* <AdminPrivate exact path="/admin/dashboard/business/new" component={NewBusiness} /> */}
+          <Route component={NotFound} />
         </Switch>
       </BrowserRouter>
     )

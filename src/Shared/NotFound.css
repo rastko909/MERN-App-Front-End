@@ -1,0 +1,16 @@
+.notfound-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.notfound-text {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 3rem;
+  width: 50%;
+  height: 50%;
+}
