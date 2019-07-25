@@ -53,11 +53,25 @@ class Form extends React.Component {
       answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
       categories: {},
       priority: 0,
+      disclosureLevel: "",
+      claimantDetails: {},
     },
     confirmationData: {
       secretKey: '',
       businessId: '',
     }
+  }
+
+  handleClaimantDetails = (event) => {
+    let newState = this.state;
+    newState.newClaim.claimantDetails[event.target.id] = event.target.value;
+    this.setState(newState);
+  }
+
+  handleDisclosureLevel = (event) => {
+    let newState = this.state;
+    newState.newClaim.disclosureLevel = event.target.value;
+    this.setState(newState);
   }
 
   handleSubmit = async (event) => {
@@ -180,8 +194,14 @@ class Form extends React.Component {
                   placeholder='Please use the Business ID supplied by your company, or call our hotline for help.' />}
                 labelPlacement='top'
                 required={true}
-              />
-              
+              />              
+
+            <div className="category-container">
+              <div className="claim-heading">Categories</div>
+
+              <DisclosureLevel setDetails={this.handleClaimantDetails} setLevel={this.handleDisclosureLevel} />
+            </div>
+
             </div>
             <div className="category-container">
               <div className="claim-heading">Categories</div>
