@@ -6,16 +6,13 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import './DisclosureLevel.css'
 
-export default function DisclosureLevel() {
+export default function DisclosureLevel({setDetails, setLevel}) {
   
   const [anonymityLevel, setAnonymityLevel] = React.useState('');
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [phoneNumber, setPhoneNumber] = React.useState('');
-  const [emailAddress, setEmailAddress] = React.useState('');
 
   function handleChange(event) {
     setAnonymityLevel(event.target.value);
+    setLevel(event);
   }
 
   function renderDisclosureInfo() {
@@ -37,10 +34,10 @@ export default function DisclosureLevel() {
   function renderUserFields() {
     return (
       <>
-        <TextField variant="outlined" margin="normal" fullWidth id="first-name" label="First Name" name="first-name" onChange={(e) => setFirstName(e.target.value)} />
-        <TextField variant="outlined" margin="normal" fullWidth id="last-name" label="Last Name" name="last-name" onChange={(e) => setLastName(e.target.value)} />
-        <TextField variant="outlined" margin="normal" fullWidth id="phone-number" label="Phone Number" name="phone-number" onChange={(e) => setPhoneNumber(e.target.value)} />
-        <TextField variant="outlined" margin="normal" fullWidth id="email-address" label="Email Address" name="email-address" onChange={(e) => setEmailAddress(e.target.value)} />
+        <TextField variant="outlined" margin="normal" fullWidth id="firstName" label="First Name" name="firstName" onBlur={(e) => setDetails(e)} />
+        <TextField variant="outlined" margin="normal" fullWidth id="lastName" label="Last Name" name="lastName" onBlur={(e) => setDetails(e)} />
+        <TextField variant="outlined" margin="normal" fullWidth id="phoneNumber" label="Phone Number" name="phoneNumber" onBlur={(e) => setDetails(e)} />
+        <TextField variant="outlined" margin="normal" fullWidth id="emailAddress" label="Email Address" name="emailAddress" onBlur={(e) => setDetails(e)} />
       </>
     );
   }
