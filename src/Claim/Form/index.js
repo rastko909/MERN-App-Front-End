@@ -48,6 +48,8 @@ class Form extends React.Component {
       },
     },
     newClaim: {
+      disclosureLevel: "",
+      claimantDetails: {},
       business_id: "",
       questions: questions,
       answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
@@ -58,6 +60,17 @@ class Form extends React.Component {
       secretKey: '',
       businessId: '',
     }
+  }
+
+  handleClaimantDetails = (event) => {
+    let newState = this.state;
+    newState.newClaim.claimantDetails[event.target.id] = event.target.value;
+    this.setState(newState);
+  }
+  handleDisclosureLevel = (event) => {
+    let newState = this.state;
+    newState.newClaim.disclosureLevel = event.target.value;
+    this.setState(newState);
   }
 
   handleSubmit = async (event) => {
@@ -185,7 +198,7 @@ class Form extends React.Component {
             </div>
             <div className="claim-heading">Disclosure Level</div>
             <div className="disclosure-container">
-              <DisclosureLevel />
+            <DisclosureLevel setDetails={this.handleClaimantDetails} setLevel={this.handleDisclosureLevel} />
             </div>
 
 

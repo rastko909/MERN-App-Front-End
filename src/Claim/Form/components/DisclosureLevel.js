@@ -21,13 +21,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function DisclosureLevel() {
+export default function DisclosureLevel({setDetails, setLevel}) {
   const classes = useStyles();
   const [anonymityLevel, setAnonymityLevel] = React.useState('');
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [phoneNumber, setPhoneNumber] = React.useState('');
-  const [emailAddress, setEmailAddress] = React.useState('');
   const [disabled, setDisabled] = React.useState(true);
 
   // Disclosure level messages for our tooltips
@@ -37,6 +33,7 @@ export default function DisclosureLevel() {
 
   function handleChange(event) {
     setAnonymityLevel(event.target.value);
+    setLevel(event);
     if (event.target.value !== 'completely-anonymous') {
       setDisabled(false);
     } else {
@@ -47,12 +44,10 @@ export default function DisclosureLevel() {
   function renderUserFields(disabled) {
     return (
       <>
-        <div className="user-input-container">
-          <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="first-name" label={ disabled ? "Disabled" : "First Name" } name="first-name" onChange={(e) => setFirstName(e.target.value)} />
-          <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="last-name" label={ disabled ? "Disabled" : "Last Name" } name="last-name" onChange={(e) => setLastName(e.target.value)} />
-          <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="phone-number" label={ disabled ? "Disabled" : "Phone Number" } name="phone-number" onChange={(e) => setPhoneNumber(e.target.value)} />
-          <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="email-address" label={ disabled ? "Disabled" : "Email Address" } name="email-address" onChange={(e) => setEmailAddress(e.target.value)} />
-        </div>
+        <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="firstName" label={ disabled ? "Disabled" : "First Name" } name="firstName" onBlur={(e) => setDetails(e)} />
+        <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="lastName" label={ disabled ? "Disabled" : "Last Name" } name="lastName" onBlur={(e) => setDetails(e)} />
+        <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="phoneNumber" label={ disabled ? "Disabled" : "Phone Number" }  name="phoneNumber" onBlur={(e) => setDetails(e)} />
+        <TextField variant="outlined" margin="normal" disabled={disabled} fullWidth id="emailAddress" label={ disabled ? "Disabled" : "Email Address" } name="emailAddress" onBlur={(e) => setDetails(e)} />
       </>
     );
   }
