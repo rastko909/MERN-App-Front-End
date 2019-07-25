@@ -35,7 +35,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './ViewClaim.css';
 
 // Components 
-import Comment from './Comment';
+import Comment from '../../../Shared/Comment';
 
 
 // Confirm comment dialog box
