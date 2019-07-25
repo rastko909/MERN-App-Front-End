@@ -197,8 +197,10 @@ class Form extends React.Component {
       return (
         <>
           <NavBar />
+        
           {/* <Notifier message="Business ID is incorrect or does not exist" variant="success" /> */}
           {alert.notified && <Notifier destroy={this.handleDestroyNotifier} message="Business ID is incorrect or does not exist" variant="success" />}
+        
           <FormGroup className="form-container">
             <div className="claim-heading" id="business-notifier" ref={this.state.refs.businessId}>Business ID</div>
             <div className="business-id-container">
@@ -212,15 +214,15 @@ class Form extends React.Component {
                   placeholder='Please use the Business ID supplied by your company, or call our hotline for help.' />}
                 labelPlacement='top'
                 required={true}
-              />              
-
-            <div className="category-container">
-              <div className="claim-heading">Categories</div>
-
-              <DisclosureLevel setDetails={this.handleClaimantDetails} setLevel={this.handleDisclosureLevel} />
-            </div>
+              />
 
             </div>
+            <div className="claim-heading">Disclosure Level</div>
+            <div className="disclosure-container">
+            <DisclosureLevel setDetails={this.handleClaimantDetails} setLevel={this.handleDisclosureLevel} />
+            </div>
+
+
             <div className="category-container">
               <div className="claim-heading">Categories</div>
               <p className="category-text">Please select any of the following categories that apply to your claim: </p>
