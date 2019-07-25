@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // Material UI depdencies 
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Paper from '@material-ui/core/Paper';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { Button, FormControlLabel, Paper } from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import TableHead from '@material-ui/core/TableHead';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tabs from '@material-ui/core/Tabs';
@@ -21,11 +23,17 @@ import SubjectIcon from '@material-ui/icons/Subject';
 import MessageIcon from '@material-ui/icons/Message';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 
+
+// Expansion Panel stuff
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+// Confirm comment dialog box
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
+
+import Comment from '../../Shared/Comment';
 // Import CSS
 import './index.css';
 
@@ -84,51 +92,44 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-const addComment = async (view, comment, functions) => {
-  try {
-    let claimId = view.id;
-    const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', { id: claimId, comment: comment });
-    console.log("Axios updateprioty reponse", response);
-    functions.setView({ name: 'viewclaim', id: claimId })
-  } catch (error) {
-    console.log("Caught an error requesting data:\n", error.message);
-  }
-}
-
-const getSignedUrls = async (attachments, functions) => {
-
-  let signedUrls = [];
-  try {
-    for (let url of attachments) {
-      console.log(url)
-      let signed = await axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
-      if (signed) {
-        signedUrls.push(signed)
-        console.log('signed:', signed, 'signedUrls', signedUrls)
-      }
-    }
-    if (signedUrls) {
-      return signedUrls;
-    }
-  } catch (error) {
-    console.log("Caught an error requesting data:\n", error.message);
-  }
-
-}
-
 export default function ViewClaim(props) {
 
   const classes = useStyles();
 
   const [comment, setComment] = React.useState('');
   const [confirmComment, setConfirmComment] = React.useState(false);
+  const [newComments, setNewComments] = React.useState([]);
+
+  const addComment = async (id, comment) => {
+    try {
+      let claimId = id;
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', { id: claimId, comment: comment, user: 'Claimant' });
+      return response.data;
+    } catch (error) {
+      console.log("Caught an error requesting data:\n", error.message);
+    }
+  }
 
   // tab stuff
   const [value, setValue] = React.useState(0);
 
   // reference our comment input without messing with the state or render 
   const commentInput = React.createRef();
+
+  function handleOpenConfirmComment() {
+    setComment(commentInput.current.value);
+    setConfirmComment(true);
+  }
+
+  function handleCloseConfirmComment() {
+    setConfirmComment(false);
+  }
+
+  const handleAcceptCommentConfirm = async (id) => {
+    let newComments = await addComment(id, comment);
+    setNewComments(newComments);
+    setConfirmComment(false);
+  }
 
   function handleChange(event, newValue) {
     setValue(newValue);
@@ -163,11 +164,43 @@ export default function ViewClaim(props) {
     };
   }
 
+  function renderComments() {
+    let comments;
+    if (newComments.length === 0) {
+      comments = props.data.comments;
+    } else {
+      comments = newComments;
+    }
+    if (comments <= 0) {
+      return (
+        <>
+          <p>There are currently no comments on this claim.</p>
+        </>
+      )
+    }
+    return (
+      <>
+        {comments.slice(0).reverse().map((comment, index) => {
+          return (
+            <Comment key={index} user={comment.user} date={comment.timestamp} comment={comment.text} />
+          )
+        })}
+      </>
+    );
+  }
+
+  // Hook useEffect provides state within this component - following Material UI convention
+  useEffect(() => {
+    console.log('in use effect')
+  }, [comment, setNewComments]);
+
   const renderClaimData = () => {
 
-    const { claimBusId, timestamps, status, categories, details, questions, attachments } = props.data
-    
-    console.log('signed attachments: ', attachments)
+    const { claimBusId, timestamps, status, categories, details, questions, id } = props.data
+
+    const attachments = props.data.signedAttachments;
+
+    console.log(attachments);
 
     return (
       <>
@@ -196,7 +229,7 @@ export default function ViewClaim(props) {
               <Table>
                 <TableBody>
                   <TableRow hover={true}>
-                    <TableCell><strong>Claim ID:</strong> </TableCell>
+                    <TableCell><strong>Business Name:</strong> </TableCell>
                     <TableCell>{null}</TableCell>
                   </TableRow>
                   <TableRow hover={true}>
@@ -252,7 +285,7 @@ export default function ViewClaim(props) {
 
         <TabPanel value={value} index={1}>
           <Paper className={classes.comments}>
-            {/* {renderComments(claim)}
+            {renderComments()}
             <FormControlLabel
               className='answer'
               control={<TextareaAutosize
@@ -263,23 +296,53 @@ export default function ViewClaim(props) {
                 rows={5} />}
               labelPlacement='top'
             />
-            <Button className="comment-submit-btn" variant="contained" onClick={() => handleOpenConfirmComment(view, functions)} color="primary">Submit</Button> */}
+            <Button className="comment-submit-btn" variant="contained" onClick={() => handleOpenConfirmComment(id, comment)} color="primary">Submit</Button>
+            <Dialog
+              open={confirmComment}
+              onClose={handleCloseConfirmComment}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{"You are about to reply to a claim with this comment"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {comment}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseConfirmComment} color="primary">
+                  Cancel
+            </Button>
+                <Button onClick={() => handleAcceptCommentConfirm(id)} color="primary" autoFocus>
+                  Submit
+            </Button>
+              </DialogActions>
+            </Dialog>
           </Paper>
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Paper className={classes.comments}>
+          <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Attachment #</TableCell>
+                  <TableCell align="right">Attachment Preview</TableCell>
+                  <TableCell align="right">Attachment Link</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
                 {Object.values(attachments).map((attachment, index) => {
+                  console.log(attachment);
                   return (
-                    <>
-                    <br />
-                    <strong>ATTACHMENT {index}:</strong>
-                    <br />
-                    {attachment.data} 
-                    <br />
-                    <br />
-                    </>
+                    <TableRow key={index} hover={true}>
+                      <TableCell>{index}</TableCell>
+                      <TableCell align="right"><img className="preview" src={attachment.data} alt="attachment" /></TableCell>
+                      <TableCell align="right"><strong><a href={attachment.data}>View Attachment</a></strong></TableCell>
+                    </TableRow>
                   )
                 })}
+              </TableBody>
+            </Table>
           </Paper>
         </TabPanel>
 

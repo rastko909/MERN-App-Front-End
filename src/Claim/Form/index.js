@@ -144,7 +144,7 @@ class Form extends React.Component {
 
   handleBusinessID = (event) => {
     let newState = this.state;
-    newState.newClaim[event.target.id] = event.target.value;
+    newState.newClaim[event.target.id] = event.target.value.trim();
     this.setState(newState);
   }
 

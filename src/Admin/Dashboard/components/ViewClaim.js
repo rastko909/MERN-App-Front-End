@@ -18,6 +18,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
+import TableHead from '@material-ui/core/TableHead';
 
 // import Badge from '@material-ui/core/Badge';
 
@@ -35,7 +36,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './ViewClaim.css';
 
 // Components 
-import Comment from './Comment';
+import Comment from '../../../Shared/Comment';
 
 
 // Confirm comment dialog box
@@ -131,7 +132,7 @@ const updateStatus = async (view) => {
 const addComment = async (view, comment, functions) => {
   try {
     let claimId = view.id;
-    const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', { id: claimId, comment: comment });
+    const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', { id: claimId, comment: comment, user: 'Case Manager' });
     console.log("Axios updateprioty reponse", response);
     functions.setView({ name: 'viewclaim', id: claimId })
   } catch (error) {
@@ -271,7 +272,7 @@ export default function ViewClaim({ view, functions }) {
       <>
         {claim.comments.map((comment, index) => {
           return (
-            <Comment key={index} from={'Case Manager'} date={comment.timestamp} comment={comment.text} />
+            <Comment key={index} user={comment.user} date={comment.timestamp} comment={comment.text} />
           )
         })}
       </>
@@ -285,8 +286,6 @@ export default function ViewClaim({ view, functions }) {
     const claim = view.data;
     const questions = view.data.questions;
     const attachments = view.data.signedAttachments;
-
-    console.log('signed attachments: ', attachments)
 
     return (
       <>
@@ -444,18 +443,27 @@ export default function ViewClaim({ view, functions }) {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Paper className={classes.comments}>
+          <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Attachment #</TableCell>
+                  <TableCell align="right">Attachment Preview</TableCell>
+                  <TableCell align="right">Attachment Link</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
                 {Object.values(attachments).map((attachment, index) => {
+                  console.log(attachment);
                   return (
-                    <>
-                    <br />
-                    <strong>ATTACHMENT {index}:</strong>
-                    <br />
-                    {attachment.data} 
-                    <br />
-                    <br />
-                    </>
+                    <TableRow key={index} hover={true}>
+                      <TableCell>{index}</TableCell>
+                      <TableCell align="right"><img className="preview" src={attachment.data} alt="attachment" /></TableCell>
+                      <TableCell align="right"><strong><a href={attachment.data}>View Attachment</a></strong></TableCell>
+                    </TableRow>
                   )
                 })}
+              </TableBody>
+            </Table>
           </Paper>
         </TabPanel>
 

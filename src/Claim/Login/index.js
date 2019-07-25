@@ -55,6 +55,7 @@ export default function ClaimLogin(props) {
     const data = { businessId, secretKey }
     try {
       const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/login', data);
+      response.data.signedAttachments = await getSignedUrls(response.data.attachments)
       if (response.status !== 200)
         console.log(`{ RENDER VIEW FOR ERROR: ${response.status} }`);
       else {
@@ -66,6 +67,25 @@ export default function ClaimLogin(props) {
       console.log(`{ RENDER VIEW FOR ERROR: ${error.message} }`);
     }
 
+  }
+
+  const getSignedUrls = async (attachments) => {
+    let signedUrls = [];
+    try {
+      for (let url of attachments) {
+        console.log(url)
+        let signed = await axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
+        if (signed) {
+          signedUrls.push(signed)
+          console.log('signed:', signed, 'signedUrls', signedUrls)
+        }
+      }
+      if (signedUrls) {
+        return signedUrls;
+      }
+    } catch (error) {
+      console.log("Caught an error requesting data:\n", error.message);
+    }
   }
 
   const renderLogin = () => {

@@ -76,9 +76,9 @@ export default function BusinessesList({ view, functions }) {
             {view.data.map((row, index) => (
               <TableRow key={index} onClick={(e) => handleClick(e, row.id, functions, "claim")} className="table-row" >
                 <TableCell><span onClick={(e) => handleClick(e, row.id, functions, "claim")} className={'monospaced link-hover'}>{row.id}</span></TableCell>
-                <TableCell align="right"><span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'link-hover'}>{row.name}</span></TableCell>
+                <TableCell align="right"><span>{row.name}</span></TableCell>
                 <TableCell align="right">
-                  <span onClick={(e) => handleClick(e, row.businessId, functions, "business")} className={'monospaced link-hover'}>{row.abn}</span>
+                  <span className={'monospaced link-hover'}>{row.abn}</span>
                 </TableCell>
                 <TableCell align="right">{row.claims}</TableCell>
               </TableRow>
