@@ -28,7 +28,7 @@ export default function ViewBusiness({ view, functions }) {
   return (
     <>
       <h1>({businessData.id}) {businessData.name}</h1>
-      <h3>ABD: {businessData.abn}</h3>
+      <h3>ABN: {businessData.abn}</h3>
       <p>Open claims: {businessData.openClaims}</p>
     </>
   );
