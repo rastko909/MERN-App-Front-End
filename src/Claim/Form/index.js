@@ -10,11 +10,9 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Confirmation from './components/Confirmation';
-import Notifier  from '../../Shared/Alert';
+import Notifier  from '../../Shared/Notifier';
 
 axios.defaults.withCredentials = true;
-
-let exists = true;
 
 const questions = [
   'This is Question 1',
@@ -41,6 +39,7 @@ class Form extends React.Component {
   state = {
     complete: false,
     files: [],
+    notified: false,
     pagination: {
       page: {
         currentPage: 0,
@@ -76,11 +75,12 @@ class Form extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    exists = await this.checkId();
-    this.setState({});
+    let exists = await this.checkId();
+
     if (exists) {
       this.sendAnswers();
     } else {
+      this.setState({ notified: true })
       console.log(`{ RENDER ID NOT FOUND NOTIFICATION FOR ID: ${this.state.newClaim.business_id} }`);
     }
   }
@@ -115,7 +115,6 @@ class Form extends React.Component {
       await this.uploadImages(claimId, business_id, formData)
       this.state.confirmationData.secretKey = response.data.secretKey;
       this.state.confirmationData.businessId = business_id
-      console.log(`{ RENDER 'Secret key with disclaimer': ${response.data.secretKey}`);
       this.setState({ complete: true })
     }
   }
@@ -168,9 +167,10 @@ class Form extends React.Component {
   }
 
   render = () => {
-    console.log(exists)
+    
+    const { notifier } = this.state;
+
     if (this.state.complete === true) {
-      console.log('submitting... ', this.state)
       return (
         <>
           <NavBar />
@@ -178,11 +178,10 @@ class Form extends React.Component {
         </>
       )
     } else {
-
       return (
         <>
           <NavBar />
-          {exists ? null : <Notifier message="Business ID is incorrect or does not exist" />  }
+          {notifier.notified && <Notifier message="Business ID is incorrect or does not exist" variant="success" />}
           <FormGroup className="form-container">
             <div className="claim-heading">Business ID</div>
             <div className="business-id-container">
@@ -190,7 +189,7 @@ class Form extends React.Component {
                 control={<OutlinedInput id="business_id"
                   autoFocus={true}
                   fullWidth={true}
-                  onChange={this.handleBusinessID}
+                  onBlur={this.handleBusinessID}
                   placeholder='Please use the Business ID supplied by your company, or call our hotline for help.' />}
                 labelPlacement='top'
                 required={true}
