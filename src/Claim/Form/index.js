@@ -33,35 +33,41 @@ const questions = [
 
 class Form extends React.Component {
 
-  state = {
-    alert: {
-      notified: false,
-      ref: undefined,
-    },
-    complete: false,
-    files: [],
-    pagination: {
-      page: {
-        currentPage: 0,
-        maxPage: 10
+  constructor(props) {
+    super();
+
+    console.log("Props from the Form Constructor:", props);
+
+    this.state = {
+      alert: {
+        notified: false,
+        ref: undefined,
       },
-    },
-    newClaim: {
-      business_id: "",
-      questions: questions,
-      answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
-      categories: {},
-      priority: 0,
-      disclosureLevel: "",
-      claimantDetails: {},
-    },
-    confirmationData: {
-      secretKey: '',
-      businessId: '',
-    },
-    refs: {
-      businessId: React.createRef(),
-    },
+      complete: false,
+      files: [],
+      pagination: {
+        page: {
+          currentPage: 0,
+          maxPage: 10
+        },
+      },
+      newClaim: {
+        business_id: "",
+        questions: questions,
+        answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
+        categories: {},
+        priority: 0,
+        disclosureLevel: "",
+        claimantDetails: {},
+      },
+      confirmationData: {
+        secretKey: '',
+        businessId: '',
+      },
+      refs: {
+        businessId: React.createRef(),
+      },
+    }
   }
 
   handleDestroyNotifier = () => {
@@ -187,9 +193,7 @@ class Form extends React.Component {
         </>
       )
     } else {
-      console.log(this.state.refs.businessId);
-      console.log(this.state.refs.businessId);
-      console.log(this.state.refs.businessId);
+      
       return (
         <>
           <NavBar />
