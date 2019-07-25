@@ -10,7 +10,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Confirmation from './components/Confirmation';
-import Notifier  from '../../Shared/Alert';
+import Notifier from '../../Shared/Alert';
 
 axios.defaults.withCredentials = true;
 
@@ -48,6 +48,8 @@ class Form extends React.Component {
       },
     },
     newClaim: {
+      disclosureLevel: "",
+      claimantDetails: {},
       business_id: "",
       questions: questions,
       answers: { answer_1: "", answer_2: "", answer_3: "", answer_4: "", answer_5: "", answer_6: "", answer_7: "", answer_8: "", answer_9: "", answer_10: "", answer_11: "", answer_12: "", answer_13: "", answer_14: "", answer_15: "", answer_16: "", answer_17: "" },
@@ -182,7 +184,7 @@ class Form extends React.Component {
       return (
         <>
           <NavBar />
-          {exists ? null : <Notifier message="Business ID is incorrect or does not exist" />  }
+          {exists ? null : <Notifier message="Business ID is incorrect or does not exist" />}
           <FormGroup className="form-container">
             <div className="claim-heading">Business ID</div>
             <div className="business-id-container">
@@ -194,15 +196,15 @@ class Form extends React.Component {
                   placeholder='Please use the Business ID supplied by your company, or call our hotline for help.' />}
                 labelPlacement='top'
                 required={true}
-              />              
-
-            <div className="category-container">
-              <div className="claim-heading">Categories</div>
-
-              <DisclosureLevel setDetails={this.handleClaimantDetails} setLevel={this.handleDisclosureLevel} />
-            </div>
+              />
 
             </div>
+            <div className="claim-heading">Disclosure Level</div>
+            <div className="disclosure-container">
+            <DisclosureLevel setDetails={this.handleClaimantDetails} setLevel={this.handleDisclosureLevel} />
+            </div>
+
+
             <div className="category-container">
               <div className="claim-heading">Categories</div>
               <p className="category-text">Please select any of the following categories that apply to your claim: </p>

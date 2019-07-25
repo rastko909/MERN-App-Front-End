@@ -1,3 +1,21 @@
 .disclosure-info {
+  /* max-width: 50px; */
+}
+
+.user-input-container {
+   width: 100% !important;
+   transition: width 2s;
+}
+
+.user-disclosure-container {
+  /* border: 1px solid red; */
   width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
