@@ -9,8 +9,11 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Confirmation from './components/Confirmation';
+import Notifier  from '../../Shared/Alert';
 
 axios.defaults.withCredentials = true;
+
+let exists = true;
 
 const questions = [
   'This is Question 1',
@@ -54,16 +57,22 @@ class Form extends React.Component {
       secretKey: '',
       businessId: '',
     }
-
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const exists = await this.checkId();
+    exists = await this.checkId();
+    this.setState({});
     if (exists) {
       this.sendAnswers();
     } else {
       console.log(`{ RENDER ID NOT FOUND NOTIFICATION FOR ID: ${this.state.newClaim.business_id} }`);
+    }
+  }
+
+  checkBusiness = (event) => {
+    if (event.target.value === null) {
+      console.log('need business id')
     }
   }
 
@@ -144,7 +153,7 @@ class Form extends React.Component {
   }
 
   render = () => {
-
+    console.log(exists)
     if (this.state.complete === true) {
       console.log('submitting... ', this.state)
       return (
@@ -158,6 +167,7 @@ class Form extends React.Component {
       return (
         <>
           <NavBar />
+          {exists ? null : <Notifier message="Business ID is incorrect or does not exist" />  }
           <FormGroup className="form-container">
             <div className="claim-heading">Business ID</div>
             <div className="business-id-container">
