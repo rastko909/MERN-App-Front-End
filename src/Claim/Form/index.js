@@ -6,9 +6,6 @@ import { DropzoneArea } from 'material-ui-dropzone';
 import NavBar from '../../Home/components/NavBar';
 import Question from './components/Question';
 import DisclosureLevel from './components/DisclosureLevel';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Confirmation from './components/Confirmation';
 import Notifier  from '../../Shared/Notifier';
 
@@ -37,9 +34,12 @@ const questions = [
 class Form extends React.Component {
 
   state = {
+    alert: {
+      notified: false,
+      ref: undefined,
+    },
     complete: false,
     files: [],
-    notified: false,
     pagination: {
       page: {
         currentPage: 0,
@@ -58,7 +58,14 @@ class Form extends React.Component {
     confirmationData: {
       secretKey: '',
       businessId: '',
-    }
+    },
+    refs: {
+      businessId: React.createRef(),
+    },
+  }
+
+  handleDestroyNotifier = () => {
+    this.setState({ alert: { notified: false, ref: undefined }});
   }
 
   handleClaimantDetails = (event) => {
@@ -80,7 +87,9 @@ class Form extends React.Component {
     if (exists) {
       this.sendAnswers();
     } else {
-      this.setState({ notified: true })
+      this.setState({ alert: { notified: true, ref: this.state.refs.businessId }})
+      this.state.refs.businessId.current.scrollIntoView({ behavior: 'smooth', block: 'start', });
+      this.state.refs.businessId.current.
       console.log(`{ RENDER ID NOT FOUND NOTIFICATION FOR ID: ${this.state.newClaim.business_id} }`);
     }
   }
@@ -167,8 +176,8 @@ class Form extends React.Component {
   }
 
   render = () => {
-    
-    const { notifier } = this.state;
+
+    const { alert } = this.state;
 
     if (this.state.complete === true) {
       return (
@@ -178,15 +187,21 @@ class Form extends React.Component {
         </>
       )
     } else {
+      console.log(this.state.refs.businessId);
+      console.log(this.state.refs.businessId);
+      console.log(this.state.refs.businessId);
       return (
         <>
           <NavBar />
-          {notifier.notified && <Notifier message="Business ID is incorrect or does not exist" variant="success" />}
+          {/* <Notifier message="Business ID is incorrect or does not exist" variant="success" /> */}
+          {alert.notified && <Notifier destroy={this.handleDestroyNotifier} message="Business ID is incorrect or does not exist" variant="success" />}
           <FormGroup className="form-container">
-            <div className="claim-heading">Business ID</div>
+            <div className="claim-heading" id="business-notifier" ref={this.state.refs.businessId}>Business ID</div>
             <div className="business-id-container">
+
               <FormControlLabel className='answer'
-                control={<OutlinedInput id="business_id"
+                control={<OutlinedInput
+                  id="business_id"
                   autoFocus={true}
                   fullWidth={true}
                   onBlur={this.handleBusinessID}
