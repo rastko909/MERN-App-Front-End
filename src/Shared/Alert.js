@@ -14,30 +14,45 @@ let openOrNot = true;
 
 class Notifier extends React.Component {
 
-  handleSnackbarClose = () => {
-    openOrNot = false;
-    this.setState({})
-  };
-
-  componentWillUnmount() {
-    console.log('in unmount')
+  state = {
+    showNotifier: false,
   }
 
-  componentDidUpdate() {
-    openOrNot = true;
+  componentWillMount = () => {
+    this.setState({ showNotifier: true });
   }
 
-  render() {
+  componentWillUnmount = () => {
+    this.setState({ showNotifier: false })
+  }
+
+  handleNotifierClose = () => {
+    this.setState({ showNotifier: false });
+  }
+
+  // componentWillUnmount() {
+  //   console.log('in unmount')
+  // }
+
+  // componentDidUpdate() {
+  //   openOrNot = true;
+  // }
+
+  render = () => {
+    if (!this.state.showNotifier)
+      return null;
+
     console.log('in alert')
     const { classes } = this.props;
-    console.log(styles)
+    console.log("Notifier 'this.props':", this.props);
+
     return (
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         autoHideDuration={3000}
         message={this.props.message}
-        onClose={this.handleSnackbarClose}
-        open={openOrNot}
+        onClose={this.handleNotifierClose}
+        open={this.state.showNotifier}
         ContentProps={{
           classes: {
             root: classes.root
