@@ -5,6 +5,7 @@ import axios from 'axios';
 import { DropzoneArea } from 'material-ui-dropzone';
 import NavBar from '../../Home/components/NavBar';
 import Question from './components/Question';
+import DisclosureLevel from './components/DisclosureLevel';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -170,6 +171,7 @@ class Form extends React.Component {
                 labelPlacement='top'
                 required={true}
               />
+              
             </div>
             <div className="category-container">
               <div className="claim-heading">Categories</div>
