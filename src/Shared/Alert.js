@@ -1,46 +1,51 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Snackbar from '@material-ui/core/Snackbar';
+import './Alert.css'
+import { withStyles } from '@material-ui/styles';
 
-class AlertDialog extends React.Component {
-
-  state = {
-    open: true,
-    message: this.props.message
+const styles = {
+  root: {
+    background: 'red',
+    marginTop: '64px'
   }
-  
-  handleClose = () => {
-    this.setState({ open: false })
+};
+
+let openOrNot = true;
+
+class Notifier extends React.Component {
+
+  handleSnackbarClose = () => {
+    openOrNot = false;
+    this.setState({})
+  };
+
+  componentWillUnmount() {
+    console.log('in unmount')
+  }
+
+  componentDidUpdate() {
+    openOrNot = true;
   }
 
   render() {
+    console.log('in alert')
+    const { classes } = this.props;
+    console.log(styles)
     return (
-      <div>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{'Error'}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-            { this.state.message }
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={3000}
+        message={this.props.message}
+        onClose={this.handleSnackbarClose}
+        open={openOrNot}
+        ContentProps={{
+          classes: {
+            root: classes.root
+          }
+        }}
+      />
     );
   }
 }
 
-export default AlertDialog;
+export default withStyles(styles)(Notifier);
