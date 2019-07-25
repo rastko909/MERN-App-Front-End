@@ -9,6 +9,7 @@ import { Button, FormControlLabel, Paper } from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import TableHead from '@material-ui/core/TableHead';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tabs from '@material-ui/core/Tabs';
@@ -90,28 +91,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-const getSignedUrls = async (attachments) => {
-
-  let signedUrls = [];
-  try {
-    for (let url of attachments) {
-      console.log(url)
-      let signed = await axios.get(process.env.REACT_APP_API_URL + '/upload', { headers: { url } });
-      if (signed) {
-        signedUrls.push(signed)
-        console.log('signed:', signed, 'signedUrls', signedUrls)
-      }
-    }
-    if (signedUrls) {
-      return signedUrls;
-    }
-  } catch (error) {
-    console.log("Caught an error requesting data:\n", error.message);
-  }
-
-}
-
 export default function ViewClaim(props) {
 
   const classes = useStyles();
@@ -119,22 +98,17 @@ export default function ViewClaim(props) {
   const [comment, setComment] = React.useState('');
   const [confirmComment, setConfirmComment] = React.useState(false);
   const [newComments, setNewComments] = React.useState([]);
-  const [claimData, setClaimData] = React.useState({
-    comments: undefined,
-  })
-
-
 
   const addComment = async (id, comment) => {
     try {
       let claimId = id;
-      const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', { id: claimId, comment: comment });
-      console.log("Axios comment reponse", response.data);
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', { id: claimId, comment: comment, user: 'Claimant' });
       return response.data;
     } catch (error) {
       console.log("Caught an error requesting data:\n", error.message);
     }
   }
+
   // tab stuff
   const [value, setValue] = React.useState(0);
 
@@ -151,10 +125,9 @@ export default function ViewClaim(props) {
   }
 
   const handleAcceptCommentConfirm = async (id) => {
-    let newComments = await addComment(id, comment)
-    console.log(newComments)
+    let newComments = await addComment(id, comment);
     setNewComments(newComments);
-    setConfirmComment(false)
+    setConfirmComment(false);
   }
 
   function handleChange(event, newValue) {
@@ -191,7 +164,13 @@ export default function ViewClaim(props) {
   }
 
   function renderComments() {
-    if (newComments <= 0) {
+    let comments;
+    if (newComments.length === 0) {
+      comments = props.data.comments;
+    } else {
+      comments = newComments;
+    }
+    if (comments <= 0) {
       return (
         <>
           <p>There are currently no comments on this claim.</p>
@@ -200,9 +179,9 @@ export default function ViewClaim(props) {
     }
     return (
       <>
-        {newComments.map((comment, index) => {
+        {comments.slice(0).reverse().map((comment, index) => {
           return (
-            <Comment key={index} from={'Claimant'} date={comment.timestamp} comment={comment.text} />
+            <Comment key={index} user={comment.user} date={comment.timestamp} comment={comment.text} />
           )
         })}
       </>
@@ -212,21 +191,15 @@ export default function ViewClaim(props) {
   // Hook useEffect provides state within this component - following Material UI convention
   useEffect(() => {
     console.log('in use effect')
-  }, [comment, claimData, newComments]);
-
-  // const updateClaimData = (dataObject) => {
-  //   console.log("updateClaimData:", dataObject)
-  //   setClaimData({comments: dataObject})
-  //   console.log("claimData:", claimData)
-  // }
+  }, [comment, setNewComments]);
 
   const renderClaimData = () => {
 
-    console.log(props.data)
+    const { claimBusId, timestamps, status, categories, details, questions, id } = props.data
 
-    const { claimBusId, timestamps, status, categories, details, comments, questions, attachments, id } = props.data
-    // updateClaimData({comments: props.data.comments})
+    const attachments = props.data.signedAttachments;
 
+    console.log(attachments);
 
     return (
       <>
@@ -348,18 +321,27 @@ export default function ViewClaim(props) {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Paper className={classes.comments}>
-            {Object.values(attachments).map((attachment, index) => {
-              return (
-                <>
-                  <br />
-                  <strong>ATTACHMENT {index}:</strong>
-                  <br />
-                  {attachment.data}
-                  <br />
-                  <br />
-                </>
-              )
-            })}
+          <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Attachment #</TableCell>
+                  <TableCell align="right">Attachment Preview</TableCell>
+                  <TableCell align="right">Attachment Link</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.values(attachments).map((attachment, index) => {
+                  console.log(attachment);
+                  return (
+                    <TableRow key={index} hover={true}>
+                      <TableCell>{index}</TableCell>
+                      <TableCell align="right"><img className="preview" src={attachment.data} alt="attachment" /></TableCell>
+                      <TableCell align="right"><strong><a href={attachment.data}>View Attachment</a></strong></TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
           </Paper>
         </TabPanel>
 
