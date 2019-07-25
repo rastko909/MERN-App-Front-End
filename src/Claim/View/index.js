@@ -103,7 +103,7 @@ export default function ViewClaim(props) {
   const addComment = async (id, comment) => {
     try {
       let claimId = id;
-      const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/add/comment', { id: claimId, comment: comment, user: 'Claimant' });
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/claim/new/comment', { id: claimId, comment: comment, user: 'Claimant' });
       return response.data;
     } catch (error) {
       console.log("Caught an error requesting data:\n", error.message);
