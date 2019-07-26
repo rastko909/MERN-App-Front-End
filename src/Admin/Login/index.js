@@ -73,11 +73,11 @@ export default function SignIn(props) {
   }
   
   // Redirect admin to dashboard if they are already logged in.
-  useEffect(() => { 
-    if (document.cookie) {
-      props.history.push('/admin/dashboard')
-    }
-   }, [props.history])
+  // useEffect(() => { 
+  //   if (document.cookie) {
+  //     props.history.push('/admin/dashboard')
+  //   }
+  //  }, [props.history])
 
   console.log("I AM RIGHT BEFORE THE RENDER!!!!!!!");
 

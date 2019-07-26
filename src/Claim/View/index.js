@@ -110,6 +110,15 @@ export default function ViewClaim(props) {
     }
   }
 
+  const convertStatus = (number) => {
+    const statuses = ["New", "Open", "Pending", "Closed"];
+
+    if (number > (statuses.length - 1))
+      return statuses[0];
+    else
+      return statuses[number];
+  };
+
   // tab stuff
   const [value, setValue] = React.useState(0);
 
@@ -178,9 +187,11 @@ export default function ViewClaim(props) {
         </>
       )
     }
+    let orderedComments = comments.slice(0).reverse();
+    console.log(orderedComments)
     return (
       <>
-        {comments.slice(0).reverse().map((comment, index) => {
+        {orderedComments.map((comment, index) => {
           return (
             <Comment key={index} user={comment.user} date={comment.timestamp} comment={comment.text} />
           )
@@ -216,7 +227,7 @@ export default function ViewClaim(props) {
 
             <form autoComplete="off">
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="status-select">{status}</InputLabel>
+                <InputLabel htmlFor="status-select"><span className="claimant-status">{convertStatus(status)}</span></InputLabel>
               </FormControl>
             </form>
 
@@ -228,10 +239,10 @@ export default function ViewClaim(props) {
             <div className="table">
               <Table>
                 <TableBody>
-                  <TableRow hover={true}>
+                  {/* <TableRow hover={true}>
                     <TableCell><strong>Business Name:</strong> </TableCell>
                     <TableCell>{null}</TableCell>
-                  </TableRow>
+                  </TableRow> */}
                   <TableRow hover={true}>
                     <TableCell><strong>Business ID:</strong> </TableCell>
                     <TableCell>{claimBusId}</TableCell>
