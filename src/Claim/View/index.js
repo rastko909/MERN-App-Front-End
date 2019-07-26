@@ -110,6 +110,15 @@ export default function ViewClaim(props) {
     }
   }
 
+  const convertStatus = (number) => {
+    const statuses = ["New", "Open", "Pending", "Closed"];
+
+    if (number > (statuses.length - 1))
+      return statuses[0];
+    else
+      return statuses[number];
+  };
+
   // tab stuff
   const [value, setValue] = React.useState(0);
 
@@ -218,7 +227,7 @@ export default function ViewClaim(props) {
 
             <form autoComplete="off">
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="status-select">{status}</InputLabel>
+                <InputLabel htmlFor="status-select"><span className="claimant-status">{convertStatus(status)}</span></InputLabel>
               </FormControl>
             </form>
 

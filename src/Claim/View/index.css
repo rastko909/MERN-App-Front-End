@@ -53,3 +53,10 @@
 .answer {
   padding: 0.5rem;
 }
+
+.claimant-status {
+  background: #FFEBEE;
+  border-left: 4px solid #f44336;
+  padding: 0.5rem;
+  font-weight: bold;
+}
